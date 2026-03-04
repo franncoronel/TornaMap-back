@@ -1,14 +1,11 @@
+## Arreglar coverage (y testear)
 [![Coverage Status](https://coveralls.io/repos/github/agusnarvaez/tornamap-backend/badge.svg?branch=master)](https://coveralls.io/github/TV3ntu/PDS-2024-backend?branch=master)
 
 # Tornamap - Backend
 En este repositorio se encuentra el código fuente del backend de la aplicación Tornamap, desarrollado en Kotlin con Spring Boot.
 
 ## Integrantes
-- PM: Agustín Narvaez
-- Francisco Coronel
-- Melody Oviedo
-- Juana Correa
-- Gabriel Tarquini
+
 ## Tecnologías Utilizadas
 - **Kotlin**: Lenguaje de programación que corre sobre la máquina virtual de Java.
 - **Spring Boot**: Framework de Java para el desarrollo de aplicaciones web.
@@ -33,7 +30,7 @@ Este repositorio sigue el modelo de branching GitFlow para gestionar el desarrol
 
 ![image](https://github.com/TV3ntu/PDS-2024-frontend/assets/75498776/b7c98055-ef38-4276-860a-bd74b1728bd9)
 
-## Breve descripción a travez de Swagger de los diferentes endpoint
+## Documentación de endpoints con Swagger
 Los mismo pueden accederse mediante:
 ```
 http://localhost:8080/swagger-ui/index.html#/
