@@ -6,6 +6,7 @@ import ar.edu.unsam.pds.dto.response.EventResponseDto
 import ar.edu.unsam.pds.models.Course
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
+import ar.edu.unsam.pds.models.enums.EventType
 
 object EventMapper {
 
@@ -40,7 +41,7 @@ object EventMapper {
             name = event.name,
             isApproved = event.isApproved,
             isCancelled = event.isCancelled,
-            courseID = event.course.id.toString(),
+            courseID = event.course?.id.toString(),
             periodID = event.period?.id.toString(),
             courseName = event.getCourseName(),
             programNames= event.getProgramNames(),
@@ -54,6 +55,8 @@ object EventMapper {
             isApproved = eventDTO.isApproved,
             isCancelled = eventDTO.isCancelled,
             course = course,
+            type = EventType.valueOf(eventDTO.type),
+            details = eventDTO.details
         )
     }
 }

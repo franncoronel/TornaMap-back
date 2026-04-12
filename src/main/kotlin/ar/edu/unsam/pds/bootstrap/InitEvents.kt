@@ -12,6 +12,7 @@ import ar.edu.unsam.pds.models.Period
 import ar.edu.unsam.pds.repository.PeriodRepository
 import org.springframework.context.annotation.Profile
 import java.time.LocalDate
+import ar.edu.unsam.pds.models.enums.EventType
 
 @Component(value = "InitEvents.beanName")
 @DependsOn(value = ["InitCourses.beanName", "InitPrograms.beanName"])
@@ -70,7 +71,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaMate1TT = Event(
             name = "Turno Tarde",
             isApproved = true,
-            course = mate1
+            course = mate1,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -178,7 +180,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaEyMN1= Event(
             name = "Cursada EyM",
             isApproved = true,
-            course = electricidadYMagnetismo!!
+            course = electricidadYMagnetismo!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -196,7 +199,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaEyMT= Event(
             name = "Cursada EyM TT",
             isApproved = true,
-            course = electricidadYMagnetismo
+            course = electricidadYMagnetismo,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -205,7 +209,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaCASO= Event(
             name = "Cursada CASO",
             isApproved = true,
-            course = caso!!
+            course = caso!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -232,7 +237,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaSPD = Event(
             name = "Cursada SPD",
             isApproved = true,
-            course = spd!!
+            course = spd!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -271,7 +277,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaRedesInfo1 = Event(
             name = "Cursada Redes de Información I",
             isApproved = true,
-            course = redesInfo1!!
+            course = redesInfo1!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }

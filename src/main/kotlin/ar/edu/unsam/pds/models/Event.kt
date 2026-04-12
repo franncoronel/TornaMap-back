@@ -1,6 +1,8 @@
 package ar.edu.unsam.pds.models
 
 import ar.edu.unsam.pds.exceptions.ValidationException
+import ar.edu.unsam.pds.models.enums.ClassroomType
+import ar.edu.unsam.pds.models.enums.EventType
 import jakarta.persistence.*
 import org.springframework.lang.Nullable
 import java.io.Serializable
