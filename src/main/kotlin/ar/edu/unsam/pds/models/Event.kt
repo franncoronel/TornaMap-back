@@ -17,8 +17,11 @@ class Event(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
-    var course: Course,
+    var course: Course? = null,
 
+    val type: EventType,
+
+    val details: String? = null
 ) : Timestamp(), Serializable {
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
@@ -32,6 +35,7 @@ class Event(
     @Nullable
     var period: Period? = null
 
+
     fun addUserToSchedule(schedule:Schedule, user:User) {
         validateScheduleInEvent(schedule)
         schedule.assignUserToSchedule(user, schedule)
@@ -43,7 +47,13 @@ class Event(
         this.course = course
     }
 
-    fun getCourseName(): String = course.name
+    fun getCourseName(): String {
+        if (course == null) {
+            throw ValidationException("No course specified")
+        }
+        return course!!.name
+    }
+
     fun addPeriod(period: Period) {
         this.period = period
     }
@@ -55,7 +65,12 @@ class Event(
 //        users.add(user)
 //    }
 
-    fun getProgramNames(): List<String> = course.programNames()
+    fun getProgramNames(): List<String> {
+        if (course == null) {
+            throw ValidationException("No course specified")
+        }
+        return course!!.programNames()
+    }
 
     fun getProfessorNames(): Set<String> = schedules.flatMap { it.getUserNames() }.toSet()
 

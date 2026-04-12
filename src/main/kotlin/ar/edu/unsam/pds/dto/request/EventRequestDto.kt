@@ -1,5 +1,6 @@
 package ar.edu.unsam.pds.dto.request
 
+import ar.edu.unsam.pds.models.enums.EventType
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -32,5 +33,11 @@ data class EventRequestDto(
     val name: String,
 
     @field:Valid
-    val schedules: MutableList<ScheduleRequestDto>
+    val schedules: MutableList<ScheduleRequestDto>,
+
+    @field:NotNull(message = "El tipo no debe ser nulo")
+    val type: String,
+
+    @field:Valid
+    val details: String?
 )
