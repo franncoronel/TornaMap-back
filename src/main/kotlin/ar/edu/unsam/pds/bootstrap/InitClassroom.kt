@@ -60,7 +60,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         )
 
         val cidi = Classroom(
-            code = "CID",
+            code = "CIDI",
             name = "Centro de investigacion y desarrollo de informatica",
             capacity = 50,
             floor = 1,
