@@ -7,6 +7,14 @@ class Student(name: String,
               lastName: String,
               email: String, ) : User(name, lastName, email) {
 
-    var programs: MutableSet<Program> = mutableSetOf()
+    val programs: MutableSet<Program> = mutableSetOf()
+    val suscribedCourses: MutableSet<Course> = mutableSetOf()
+
+    fun suscribeToCourse(course: Course) {
+            suscribedCourses.add(course)
+        }
+        fun unsuscribeToCourse(course:Course){
+            suscribedCourses.remove(course)
+        }
 
 }
