@@ -1,6 +1,7 @@
 package ar.edu.unsam.pds.models
 
 import ar.edu.unsam.pds.exceptions.ValidationException
+import ar.edu.unsam.pds.models.user.User
 import jakarta.persistence.*
 import org.springframework.lang.Nullable
 import java.io.Serializable
@@ -30,7 +31,7 @@ class Event(
     @Nullable
     var period: Period? = null
 
-    fun addUserToSchedule(schedule:Schedule, user:User) {
+    fun addUserToSchedule(schedule:Schedule, user: User) {
         validateScheduleInEvent(schedule)
         schedule.assignUserToSchedule(user, schedule)
     }

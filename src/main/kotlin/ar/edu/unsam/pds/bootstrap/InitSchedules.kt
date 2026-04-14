@@ -4,6 +4,7 @@ import ar.edu.unsam.pds.exceptions.NotFoundException
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
 import ar.edu.unsam.pds.models.*
+import ar.edu.unsam.pds.models.user.User
 import ar.edu.unsam.pds.repository.ClassroomRepository
 import ar.edu.unsam.pds.repository.EventRepository
 import ar.edu.unsam.pds.repository.ScheduleRepository

@@ -3,7 +3,7 @@ package ar.edu.unsam.pds.mappers
 import ar.edu.unsam.pds.dto.request.UserRequestDto
 import ar.edu.unsam.pds.dto.response.UserDetailResponseDto
 import ar.edu.unsam.pds.dto.response.UserResponseDto
-import ar.edu.unsam.pds.models.User
+import ar.edu.unsam.pds.models.user.User
 
 object UserMapper {
     fun buildUserDto(user: User): UserResponseDto {
