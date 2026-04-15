@@ -59,4 +59,7 @@ interface EventRepository : JpaRepository<Event, UUID> {
 
     fun existsByPeriodId(periodId: UUID): Boolean
 
+    //lista de eventos pendientes de aprobacion
+    fun findByIsApprovedIsNull(): List<Event>
+
 }

@@ -11,7 +11,7 @@ import java.util.*
 @Entity @Table(name = "APP_EVENT")
 class Event(
     var name: String,
-    var isApproved: Boolean,
+    var isApproved: Boolean?,
     var isCancelled: Boolean = false,
 
     @ManyToOne(fetch = FetchType.LAZY)

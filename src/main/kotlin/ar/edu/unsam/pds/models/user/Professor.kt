@@ -19,6 +19,7 @@ class Professor(name: String,
         }
         schedule.classroom = classroom
         schedule.assignedUsers.add(this)
+
     }
 
     private fun validateCourse(course: Course) = courses.contains(course)
