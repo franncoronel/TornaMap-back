@@ -131,6 +131,9 @@ class FilterChainConfiguration {
                 // Buildings
                 antMatcher(GET, "/api/buildings"),
                 antMatcher(GET, "/api/buildings/*"),
+
+                // Classroom
+                antMatcher(GET, "/api/classroom/*"),
             ).permitAll()
 
             // H2 DataBase @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
