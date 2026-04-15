@@ -710,15 +710,36 @@ class InitClassroom : BootstrapGeneric("Classroom") {
             building = its
         )
         classroomRepository.save(aulaA1ITS)
-        val aulaLabCLDITS= Classroom(
-            code = "LabLCD",
-            name = "Lab LCD",
+
+        val aulaA2ITS= Classroom(
+            code = "A2",
+            name = "Aula A2 - ITS",
             capacity = 50,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = its
         )
-        classroomRepository.save(aulaLabCLDITS)
+        classroomRepository.save(aulaA2ITS)
+
+        val aulaA3ITS= Classroom(
+            code = "A3",
+            name = "Aula A3 - ITS",
+            capacity = 50,
+            floor = 0,
+            type = ClassroomType.CLASSROOM,
+            building = its
+        )
+        classroomRepository.save(aulaA3ITS)
+
+        val aulaA4ITS= Classroom(
+            code = "A4",
+            name = "Aula A4 - ITS",
+            capacity = 50,
+            floor = 0,
+            type = ClassroomType.CLASSROOM,
+            building = its
+        )
+        classroomRepository.save(aulaA4ITS)
 
 
     }
