@@ -5,9 +5,9 @@ import ar.edu.unsam.pds.models.Course
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
 
-class Teacher(name: String,
-                    lastName: String,
-                    email: String, ) : User(name, lastName, email) {
+class Professor(name: String,
+                lastName: String,
+                email: String, ) : User(name, lastName, email) {
 
     val courses: MutableSet<Course> = mutableSetOf()
 
