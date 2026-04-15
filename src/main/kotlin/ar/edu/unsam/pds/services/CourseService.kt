@@ -15,11 +15,34 @@ class CourseService(
 
     fun getAll(): List<Course> = courseRepository.findAllByOrderByEventsPresenceAndName()
 
-    fun searchBy(query: String): List<Course> {
-        if (query.isNotBlank()) {
-            return courseRepository.searchByNameOrProgramOrProfessor(query).distinctBy { it.id }
+    fun searchBy(queries: List<String>): List<Course> {
+        val normalizedQueries = queries
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+            .distinct()
+
+        if (normalizedQueries.isEmpty()) {
+            return getAll()
         }
-        return getAll()
+
+        val queryResults = normalizedQueries.map {
+            courseRepository.searchByNameOrProgramOrProfessor(it).distinctBy { course -> course.id }
+        }
+
+        val matchingIds = queryResults
+            .map { it.map { course -> course.id }.toSet() }
+            .reduce(Set<UUID>::intersect)
+
+        return queryResults
+            .first()
+            .filter { it.id in matchingIds }
+            .distinctBy { it.id }
+            .sortedWith(
+                compareBy<Course>(
+                    { if (it.events.isNotEmpty()) 0 else 1 },
+                    { it.name.lowercase() }
+                )
+            )
     }
 
     fun findByID(courseID: String?): Course {
