@@ -14,12 +14,11 @@ class Professor(name: String,
     fun bookClassroom(schedule: Schedule, classroom: Classroom, event: Event, course: Course){
         event.addSchedule(schedule)
         schedule.event = event
+        schedule.classroom = classroom
+        schedule.assignedUsers.add(this)
         if (validateCourse(course)) {
             event.attachCourse(course)
         }
-        schedule.classroom = classroom
-        schedule.assignedUsers.add(this)
-
     }
 
     private fun validateCourse(course: Course) = courses.contains(course)
