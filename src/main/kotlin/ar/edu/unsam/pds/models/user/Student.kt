@@ -1,6 +1,7 @@
 package ar.edu.unsam.pds.models.user
 
 import ar.edu.unsam.pds.models.Course
+import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Program
 
 class Student(name: String,
@@ -8,13 +9,12 @@ class Student(name: String,
               email: String, ) : User(name, lastName, email) {
 
     val programs: MutableSet<Program> = mutableSetOf()
-    val suscribedCourses: MutableSet<Course> = mutableSetOf()
 
-    fun suscribeToCourse(course: Course) {
-            suscribedCourses.add(course)
-        }
-        fun unsuscribeToCourse(course:Course){
-            suscribedCourses.remove(course)
-        }
+    fun suscribeToEvent(event: Event){
+        event.suscribers.add(this.email)
+    }
 
+        fun unsusccribeToEvent(event: Event){
+            event.suscribers.remove(this.email)
+        }
 }

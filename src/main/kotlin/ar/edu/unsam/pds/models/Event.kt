@@ -13,12 +13,15 @@ class Event(
     var name: String,
     var isApproved: Boolean?,
     var isCancelled: Boolean = false,
+    val suscribers: MutableList<String> = mutableListOf(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     var course: Course,
 
 ) : Timestamp(), Serializable {
+
+
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("weekDay ASC, date ASC")
