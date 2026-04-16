@@ -53,9 +53,9 @@ class InitEvents : BootstrapGeneric("Events") {
         val adminRedesCompu=this.findCourseByName(name = "Administración de Redes de Computadoras")
         val sistAvanzadisComunicacion=this.findCourseByName(name = "Sistemas Avanzados de Comunicación")
 
-        val primerCuatrimestre = Period("Primer Cuatrimestre 2025", LocalDate.parse("2025-03-01"),LocalDate.parse("2025-07-31"))
+        val primerCuatrimestre = Period("Primer Cuatrimestre 2026", LocalDate.parse("2026-03-01"),LocalDate.parse("2026-07-31"))
         periodRepository.save(primerCuatrimestre)
-        val segundoCuatrimestre = Period("Segundo Cuatrimestre 2025", LocalDate.parse("2025-08-01"),LocalDate.parse("2025-11-30"))
+        val segundoCuatrimestre = Period("Segundo Cuatrimestre 2026", LocalDate.parse("2026-08-01"),LocalDate.parse("2026-11-30"))
         periodRepository.save(segundoCuatrimestre)
 
         val cursadaMate1TM = Event(
