@@ -50,6 +50,9 @@ class Event(
         this.period = period
     }
 
+    fun addSuscriber(suscriber: String) {
+        suscribers.add(suscriber)
+    }
 //    fun addUser(user: User) {
 //        if (validateUserId(user)) {
 //            throw ValidationException("El usuario ya es parte de este evento")

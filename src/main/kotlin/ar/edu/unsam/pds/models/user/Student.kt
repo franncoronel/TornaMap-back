@@ -11,7 +11,7 @@ class Student(name: String,
     val programs: MutableSet<Program> = mutableSetOf()
 
     fun suscribeToEvent(event: Event){
-        event.suscribers.add(this.email)
+        event.addSuscriber(this.email)
     }
 
         fun unsusccribeToEvent(event: Event){
