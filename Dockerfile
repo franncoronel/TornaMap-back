@@ -1,12 +1,21 @@
-# Genera el fat jar de la app con gradle
-FROM gradle:7.5.1-jdk17 AS build
-COPY --chown=gradle:gradle . /home/gradle/src
-ADD . /home/gradle/src
-WORKDIR /home/gradle/src
-RUN gradle bootJar --no-daemon
+# ----------- FASE DE BUILD -----------
+FROM gradle:8.7-jdk17 AS build
+WORKDIR /workspace
+COPY --chown=gradle:gradle . .
+RUN chmod +x gradlew && ./gradlew clean bootJar --no-daemon
 
-# Ejecuta la app con el jar generado
-FROM openjdk:17-jdk-alpine
+# Copiamos solo lo necesario:
+COPY --chown=gradle:gradle . .
+
+# Compila y genera el fat-jar
+RUN ./gradlew clean bootJar --no-daemon
+
+# ----------- FASE DE RUNTIME ---------
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+
+# Copiamos “el” jar que Gradle acaba de generar
+COPY --from=build /workspace/build/libs/*.jar app.jar
+
 EXPOSE 8080
-COPY --from=build /home/gradle/src/build/libs/TORNAMAP-backend-0.0.1-SNAPSHOT.jar /tornamap.jar
-ENTRYPOINT ["java", "-jar", "/tornamap.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]

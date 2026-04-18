@@ -1,8 +1,12 @@
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
     image: postgres:12
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      retries: 10
     container_name: postgres
     environment:
       POSTGRES_USER: admin
@@ -12,20 +16,25 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
   backend:
-    build: .
-    image: backend:latest
+    build: .                # usa el Dockerfile del repo
+    image: tornamap-backend:latest
     container_name: backend
     environment:
       SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://postgres:5432/tornamap
+      DB_USERNAME: admin
+      DB_PASSWORD: 1234
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
-    restart: always
     volumes:
-      - ./media:/media
+      - ./media:/media       # si necesitas persisitir uploads, etc.
+    restart: unless-stopped
 
 volumes:
   postgres_data:

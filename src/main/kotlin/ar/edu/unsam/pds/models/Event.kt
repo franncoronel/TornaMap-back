@@ -1,6 +1,7 @@
 package ar.edu.unsam.pds.models
 
 import ar.edu.unsam.pds.exceptions.ValidationException
+import ar.edu.unsam.pds.models.user.User
 import jakarta.persistence.*
 import org.springframework.lang.Nullable
 import java.io.Serializable
@@ -10,14 +11,17 @@ import java.util.*
 @Entity @Table(name = "APP_EVENT")
 class Event(
     var name: String,
-    var isApproved: Boolean,
+    var isApproved: Boolean?,
     var isCancelled: Boolean = false,
+    val suscribers: MutableList<String> = mutableListOf(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     var course: Course,
 
 ) : Timestamp(), Serializable {
+
+
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("weekDay ASC, date ASC")
@@ -30,7 +34,7 @@ class Event(
     @Nullable
     var period: Period? = null
 
-    fun addUserToSchedule(schedule:Schedule, user:User) {
+    fun addUserToSchedule(schedule:Schedule, user: User) {
         validateScheduleInEvent(schedule)
         schedule.assignUserToSchedule(user, schedule)
     }
@@ -46,6 +50,9 @@ class Event(
         this.period = period
     }
 
+    fun addSuscriber(suscriber: String) {
+        suscribers.add(suscriber)
+    }
 //    fun addUser(user: User) {
 //        if (validateUserId(user)) {
 //            throw ValidationException("El usuario ya es parte de este evento")

@@ -5,6 +5,8 @@ import jakarta.servlet.DispatcherType.ERROR
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.env.Environment
+import org.springframework.core.env.Profiles
 import org.springframework.http.HttpMethod.*
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -18,24 +20,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMa
 class FilterChainConfiguration {
 
     @Bean
-    fun filterChain(http: HttpSecurity, rememberMeServices: TokenBasedRememberMeServices): SecurityFilterChain {
-        // #############################################################################################################
-        // # filters for exceptions                                                                                    #
-        // #############################################################################################################
+    fun filterChain(
+        http: HttpSecurity,
+        env: Environment,
+        rememberMeServices: TokenBasedRememberMeServices
+    ): SecurityFilterChain {
+        /* ###############  Filtros extra ################################### */
         http.addFilterAfter(MyTempCorsFilter(), DigestAuthenticationFilter::class.java)
 
-//        http.sessionManagement { sm -> sm
-//            .sessionConcurrency { sc -> sc
-//                .maximumSessions(10)
-//                .sessionRegistry(sessionRegistry())
-//                .expiredUrl("http://localhost:4200/ingresar")
-//            }
-//            .invalidSessionUrl("http://localhost:4200/ingresar")
-//        }
 
-        // #############################################################################################################
-        // # all request matchers                                                                                      #
-        // #############################################################################################################
+        /* ###############  Autorizaciones ################################## */
         http.authorizeHttpRequests { authorize -> authorize
             // #########################################################################################################
             // # dispatcher for exceptions                                                                             #
@@ -137,9 +131,12 @@ class FilterChainConfiguration {
             ).permitAll()
 
             // H2 DataBase @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-            .requestMatchers(
-                PathRequest.toH2Console()
-            ).permitAll()
+            /* ----------  regla H2: SOLO en dev ---------- */
+            .apply {
+                if (env.acceptsProfiles(Profiles.of("dev"))) {
+                    requestMatchers(PathRequest.toH2Console()).permitAll()
+                }
+            }
 
             // the rest of the endpoints @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             .anyRequest().authenticated()
@@ -156,7 +153,10 @@ class FilterChainConfiguration {
         http.cors { it.disable() }
         http.csrf { it.disable() }
 
-        http.headers { h -> h.frameOptions { it.disable() } }
+        /* frameOptions: sólo hace falta abrirlos cuando existe la consola H2 */
+        if (env.acceptsProfiles(Profiles.of("dev"))) {
+            http.headers { h -> h.frameOptions { it.disable() } }
+        }
 
         return http.build()
     }

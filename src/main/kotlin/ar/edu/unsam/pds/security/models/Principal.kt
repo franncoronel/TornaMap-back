@@ -1,7 +1,7 @@
 package ar.edu.unsam.pds.security.models
 
 import ar.edu.unsam.pds.exceptions.InternalServerError
-import ar.edu.unsam.pds.models.User
+import ar.edu.unsam.pds.models.user.User
 import jakarta.persistence.*
 import jakarta.persistence.CascadeType.PERSIST
 import jakarta.persistence.FetchType.EAGER
