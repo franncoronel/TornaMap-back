@@ -546,7 +546,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaLabo2
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A2 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(dodino, this) // TODO: No Asignar a mónica
         }
         scheduleRepository.save(scheduleLabo2LunesB)
@@ -559,7 +559,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaLabo2
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A3 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(monica, this)
         }
         scheduleRepository.save(scheduleLabo2JuevesA)
@@ -585,7 +585,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaSPD
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A1 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(fabioSergioBruschetti, this)
 
             // TODO: si le pongo a los dos prof en el mismo día me duplica la card
@@ -601,7 +601,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaSPD
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A4 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(pedroFIriso, this)
 //            assignUserToSchedule(fabioSergioBruschetti, this)
         }
