@@ -10,4 +10,6 @@ import java.util.*
 interface ClassroomRepository : JpaRepository<Classroom, UUID>{
 
     fun findByName(@Param("name") name: String): Optional<Classroom>
+
+    fun findClassroomByCode(code: String): Optional<Classroom>
 }

@@ -48,20 +48,18 @@ class InitEvents : BootstrapGeneric("Events") {
         val bdd = this.findCourseByName(name = "Base de Datos")
         val seminario = this.findCourseByName(name = "Seminario de  Programación Concurrente, Paralela y Distribuida")
         /*TRI*/
-        val redesInfo1 = this.findCourseByName(name = "Redes de Información I")
-        val redesInfo2 = this.findCourseByName(name = "Redes de Información II")
-        val redesInfo3 = this.findCourseByName(name = "Redes de Información III")
-        val proyecto1 = this.findCourseByName(name = "Proyecto I")
-        val proyecto2 = this.findCourseByName(name = "Proyecto II")
-        val proyecto3 = this.findCourseByName(name = "Proyecto III")
-        val adminRedesCompu = this.findCourseByName(name = "Administración de Redes de Computadoras")
-        val sistAvanzadisComunicacion = this.findCourseByName(name = "Sistemas Avanzados de Comunicación")
+        val redesInfo1=this.findCourseByName(name = "Redes de Información I")
+        val redesInfo2=this.findCourseByName(name = "Redes de Información II")
+        val redesInfo3=this.findCourseByName(name = "Redes de Información III")
+        val proyecto1=this.findCourseByName(name = "Proyecto I")
+        val proyecto2=this.findCourseByName(name = "Proyecto II")
+        val proyecto3=this.findCourseByName(name = "Proyecto III")
+        val adminRedesCompu=this.findCourseByName(name = "Administración de Redes de Computadoras")
+        val sistAvanzadisComunicacion=this.findCourseByName(name = "Sistemas Avanzados de Comunicación")
 
-        val primerCuatrimestre =
-            Period("Primer Cuatrimestre 2026", LocalDate.parse("2026-03-01"), LocalDate.parse("2026-07-31"))
+        val primerCuatrimestre = Period("Primer Cuatrimestre 2026", LocalDate.parse("2026-03-01"),LocalDate.parse("2026-07-31"))
         periodRepository.save(primerCuatrimestre)
-        val segundoCuatrimestre =
-            Period("Segundo Cuatrimestre 2026", LocalDate.parse("2026-08-01"), LocalDate.parse("2026-11-30"))
+        val segundoCuatrimestre = Period("Segundo Cuatrimestre 2026", LocalDate.parse("2026-08-01"),LocalDate.parse("2026-11-30"))
         periodRepository.save(segundoCuatrimestre)
 
         val cursadaMate1TM = Event(

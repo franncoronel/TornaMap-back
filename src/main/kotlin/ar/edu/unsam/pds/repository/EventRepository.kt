@@ -67,4 +67,8 @@ interface EventRepository : JpaRepository<Event, UUID> {
     override fun findAll(): List<Event>
 
     fun existsByPeriodId(periodId: UUID): Boolean
+
+    //lista de eventos pendientes de aprobacion
+    fun findByIsApprovedIsNull(): List<Event>
+
 }

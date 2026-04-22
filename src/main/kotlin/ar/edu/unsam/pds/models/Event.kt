@@ -1,6 +1,7 @@
 package ar.edu.unsam.pds.models
 import ar.edu.unsam.pds.models.enums.EventType
 import ar.edu.unsam.pds.exceptions.ValidationException
+import ar.edu.unsam.pds.models.user.User
 import jakarta.persistence.*
 import org.springframework.lang.Nullable
 import java.io.Serializable
@@ -10,8 +11,9 @@ import java.util.*
 @Entity @Table(name = "APP_EVENT")
 class Event(
     var name: String,
-    var isApproved: Boolean,
+    var isApproved: Boolean?,
     var isCancelled: Boolean = false,
+    val suscribers: MutableList<String> = mutableListOf(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
@@ -24,6 +26,8 @@ class Event(
     var customPeriodStart: LocalDate? = null,
     var customPeriodEnd: LocalDate? = null,
 ) : Timestamp(), Serializable {
+
+
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("weekDay ASC, date ASC")
@@ -56,9 +60,17 @@ class Event(
         this.period = period
     }
 
-    fun getProgramNames(): List<String> {
-        return course?.programNames() ?: emptyList()
+    fun addSuscriber(suscriber: String) {
+        suscribers.add(suscriber)
     }
+//    fun addUser(user: User) {
+//        if (validateUserId(user)) {
+//            throw ValidationException("El usuario ya es parte de este evento")
+//        }
+//        users.add(user)
+//    }
+
+    fun getProgramNames(): List<String> = course.programNames()
 
     fun getProfessorNames(): Set<String> =
         schedules.flatMap { it.getUserNames() }.toSet()

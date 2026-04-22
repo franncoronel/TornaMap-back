@@ -5,7 +5,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.InitializingBean
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.transaction.PlatformTransactionManager
 import org.springframework.transaction.support.TransactionTemplate
 
@@ -14,8 +13,6 @@ abstract class BootstrapGeneric(private val message: String) : InitializingBean 
     private lateinit var transactionManager: PlatformTransactionManager
     private val log: Logger = LoggerFactory.getLogger(ProjectApplication::class.java)
 
-    @Value("\${spring.config.activate.on-profile}")
-    private lateinit var onProfile: String
 
     override fun afterPropertiesSet() {
       

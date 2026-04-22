@@ -3,7 +3,7 @@ package ar.edu.unsam.pds.controllers
 import ar.edu.unsam.pds.dto.request.ProgramRequestDto
 import ar.edu.unsam.pds.mappers.InstitutionMapper
 import ar.edu.unsam.pds.models.Program
-import ar.edu.unsam.pds.models.User
+import ar.edu.unsam.pds.models.user.User
 import ar.edu.unsam.pds.security.models.Principal
 import ar.edu.unsam.pds.services.ProgramService
 import org.junit.jupiter.api.BeforeEach

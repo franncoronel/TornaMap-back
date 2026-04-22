@@ -17,7 +17,7 @@ class CourseService(
 
     fun searchBy(query: String): List<Course> {
         if (query.isNotBlank()) {
-            return courseRepository.searchByNameOrProgramOrProfessor(query).distinctBy { it.id }
+            return courseRepository.searchByNameOrProgramOrProfessorOrEvent(query).distinctBy { it.id }
         }
         return getAll()
     }

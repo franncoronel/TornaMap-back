@@ -39,15 +39,19 @@ interface CourseRepository : JpaRepository<Course, UUID> {
                 SELECT 1 FROM c.programs p 
                 WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%'))
             )
+             OR EXISTS (
+                 SELECT 1 FROM c.events e 
+                 JOIN e.schedules s 
+                 JOIN s.assignedUsers u 
+                 WHERE LOWER(CONCAT(u.name, ' ', u.lastName)) 
+                 LIKE LOWER(CONCAT('%', REPLACE(:query, ' ', '%'), '%'))
+             )
             OR EXISTS (
-                SELECT 1 FROM c.events e 
-                JOIN e.schedules s 
-                JOIN s.assignedUsers u 
-                WHERE LOWER(CONCAT(u.name, ' ', u.lastName)) 
-                LIKE LOWER(CONCAT('%', REPLACE(:query, ' ', '%'), '%'))
+                SELECT 1 FROM c.events e
+                WHERE LOWER(e.name) LIKE LOWER(CONCAT('%', :query, '%'))
             )
         ORDER BY hasEvents, c.name
     """)
-    fun searchByNameOrProgramOrProfessor(@Param("query") query: String): List<Course>
+    fun searchByNameOrProgramOrProfessorOrEvent(@Param("query") query: String): List<Course>
 
 }
