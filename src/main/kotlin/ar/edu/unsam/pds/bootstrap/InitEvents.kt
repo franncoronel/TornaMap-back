@@ -340,6 +340,43 @@ class InitEvents : BootstrapGeneric("Events") {
         }
         eventRepository.save(cursadaSistAvanzadisComunicacion)*/
 
+        //EVENTOS QUE FALTAN SER APROBADOS POR EL ADMINISTRADOR
+
+        val parcialMate1 = Event(
+            name = "Parcial Matemática I",
+            isApproved = null,
+            course = mate1
+        ).apply { this.addPeriod(primerCuatrimestre) }
+        eventRepository.save(parcialMate1)
+
+        val parcialAlgo2 = Event(
+            name = "Parcial Algoritmos II",
+            isApproved = null,
+            course = algo2
+        ).apply { this.addPeriod(primerCuatrimestre) }
+        eventRepository.save(parcialAlgo2)
+
+        val recuperatorioRedes = Event(
+            name = "Recuperatorio Telecomunicaciones y Redes",
+            isApproved = null,
+            course = telecomuncacionesYRedes
+        ).apply { this.addPeriod(primerCuatrimestre) }
+        eventRepository.save(recuperatorioRedes)
+
+        val claseExtraParadigmas = Event(
+            name = "Clase Extra Paradigmas de Programación",
+            isApproved = null,
+            course = paradigmasDeProg
+        ).apply { this.addPeriod(primerCuatrimestre) }
+        eventRepository.save(claseExtraParadigmas)
+
+        val parcialPHM = Event(
+            name = "Parcial PHM",
+            isApproved = null,
+            course = progHerrModer
+        ).apply { this.addPeriod(primerCuatrimestre) }
+        eventRepository.save(parcialPHM)
+
       }
 
     fun findCourseByName(name: String): Course? {

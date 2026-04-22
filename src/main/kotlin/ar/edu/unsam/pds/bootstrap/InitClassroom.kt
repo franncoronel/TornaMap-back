@@ -51,14 +51,6 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         )
 
         //PLANTA BAJA
-        val cidi = Classroom(
-            code = "CIDI",
-            name = "Centro de investigacion y desarrollo de informatica",
-            capacity = 50,
-            floor = 1,
-            type = ClassroomType.LABORATORY,
-            building = tornavias
-        )
 
         val aulaA10 = Classroom(
             code = "A10",
