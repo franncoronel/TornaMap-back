@@ -70,7 +70,7 @@ class Event(
 //        users.add(user)
 //    }
 
-    fun getProgramNames(): List<String>? = course?.programNames()
+    fun getProgramNames(): List<String>? = course?.programNames() ?: emptyList()
 
     fun getProfessorNames(): Set<String> =
         schedules.flatMap { it.getUserNames() }.toSet()
