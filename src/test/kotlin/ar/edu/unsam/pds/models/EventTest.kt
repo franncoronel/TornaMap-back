@@ -1,6 +1,7 @@
 package ar.edu.unsam.pds.models
 
 import ar.edu.unsam.pds.BootstrapBasicTest
+import ar.edu.unsam.pds.models.user.User
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

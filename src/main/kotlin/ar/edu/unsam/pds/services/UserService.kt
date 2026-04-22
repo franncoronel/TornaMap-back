@@ -11,7 +11,7 @@ import ar.edu.unsam.pds.exceptions.NotFoundException
 import ar.edu.unsam.pds.mappers.EventMapper
 import ar.edu.unsam.pds.mappers.CourseMapper
 import ar.edu.unsam.pds.mappers.UserMapper
-import ar.edu.unsam.pds.models.User
+import ar.edu.unsam.pds.models.user.User
 import ar.edu.unsam.pds.repository.UserRepository
 import ar.edu.unsam.pds.security.models.Principal
 import ar.edu.unsam.pds.security.repository.PrincipalRepository

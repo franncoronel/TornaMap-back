@@ -6,9 +6,9 @@ import ar.edu.unsam.pds.dto.response.EventResponseDto
 import ar.edu.unsam.pds.models.Course
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
+import ar.edu.unsam.pds.models.enums.EventType
 
 object EventMapper {
-
 
     fun buildEventDto(event: Event): EventResponseDto {
         return EventResponseDto(
@@ -18,7 +18,8 @@ object EventMapper {
             schedules = event.schedules.map { ScheduleMapper.buildScheduleDto(it) },
             isCancelled = event.isCancelled,
             courseName = event.getCourseName(),
-            programNames= event.getProgramNames(),
+            programNames = event.getProgramNames(),
+            type = event.type.name,
         )
     }
 
@@ -30,7 +31,8 @@ object EventMapper {
             schedules = listOf(ScheduleMapper.buildScheduleDto(schedule)),
             isCancelled = event.isCancelled,
             courseName = event.getCourseName(),
-            programNames= event.getProgramNames(),
+            programNames = event.getProgramNames(),
+            type = event.type.name,
         )
     }
 
@@ -40,20 +42,28 @@ object EventMapper {
             name = event.name,
             isApproved = event.isApproved,
             isCancelled = event.isCancelled,
-            courseID = event.course.id.toString(),
-            periodID = event.period?.id.toString(),
+            courseID = event.course?.id?.toString(),
+            periodID = event.period?.id?.toString(),
             courseName = event.getCourseName(),
-            programNames= event.getProgramNames(),
+            programNames = event.getProgramNames(),
+            type = event.type.name,
+            details = event.details,
+            customPeriodStart = event.customPeriodStart,
+            customPeriodEnd = event.customPeriodEnd,
             schedules = event.schedules.map { ScheduleMapper.buildScheduleDto(it) },
         )
     }
 
-    fun buildEvent(eventDTO: EventRequestDto, course: Course): Event {
+    fun buildEvent(eventDTO: EventRequestDto, course: Course?): Event {
         return Event(
             name = eventDTO.name,
             isApproved = eventDTO.isApproved,
             isCancelled = eventDTO.isCancelled,
             course = course,
+            type = EventType.valueOf(eventDTO.type),
+            details = eventDTO.details ?: "",
+            customPeriodStart = eventDTO.customPeriodStart,
+            customPeriodEnd = eventDTO.customPeriodEnd,
         )
     }
 }

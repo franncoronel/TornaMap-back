@@ -19,9 +19,12 @@ import java.util.*
 @RequestMapping("api/events")
 @CrossOrigin("*")
 class EventController : UUIDValid() {
-    @Autowired private lateinit var classroomRepository: ClassroomRepository
-    @Autowired lateinit var eventService: EventService
-    @Autowired lateinit var courseService: CourseService
+    @Autowired
+    private lateinit var classroomRepository: ClassroomRepository
+    @Autowired
+    lateinit var eventService: EventService
+    @Autowired
+    lateinit var courseService: CourseService
 
     @GetMapping("/{classroomID}/{date}")
     @Operation(summary = "Get all events in a given classroom")
@@ -30,7 +33,7 @@ class EventController : UUIDValid() {
         @PathVariable date: String
     ): ResponseEntity<CustomResponse> {
         val parsedDate = LocalDate.parse(date)
-        return ResponseEntity.status(200).body (
+        return ResponseEntity.status(200).body(
             CustomResponse(
                 message = "Eventos obtenidos con exito",
                 data = eventService.searchBy(classroomID, parsedDate).flatMap { event ->
@@ -42,9 +45,9 @@ class EventController : UUIDValid() {
 
     @GetMapping("{eventID}")
     @Operation(summary = "Get an event by ID")
-    fun getEvent (@PathVariable (value="eventID", required= true) eventID: String): ResponseEntity<CustomResponse> {
+    fun getEvent(@PathVariable(required = true) eventID: String): ResponseEntity<CustomResponse> {
         validatedUUID(eventID)
-        return ResponseEntity.status(200).body (
+        return ResponseEntity.status(200).body(
             CustomResponse(
                 message = "Evento obtenido con exito",
                 data = eventService.getEvent(eventID)
@@ -54,9 +57,11 @@ class EventController : UUIDValid() {
 
     @GetMapping("detail/{eventID}")
     @Operation(summary = "Get an event detail by ID")
-    fun getEventDetail (@PathVariable (value="eventID", required= true) eventID: String): ResponseEntity<CustomResponse> {
+    fun getEventDetail(
+        @PathVariable(required = true) eventID: String
+    ): ResponseEntity<CustomResponse> {
         validatedUUID(eventID)
-        return ResponseEntity.status(200).body (
+        return ResponseEntity.status(200).body(
             CustomResponse(
                 message = "Evento obtenido con exito",
                 data = eventService.getEventDetail(eventID)
@@ -78,14 +83,14 @@ class EventController : UUIDValid() {
     }
 
 
-    @PostMapping("")
+    @PostMapping
     @Operation(summary = "Create an event")
     fun createEvent(
         @RequestBody @Valid eventDTO: EventRequestDto
     ): ResponseEntity<CustomResponse> {
 
-        val course = courseService.findByID(eventDTO.courseID)
-        val event = EventMapper.buildEvent(eventDTO,course)
+        val course = if (!eventDTO.courseID.isNullOrBlank()) courseService.findByID(eventDTO.courseID) else null
+        val event = EventMapper.buildEvent(eventDTO, course)
 
         val builtSchedules = eventDTO.schedules.map { scheduleDto ->
             val schedule = ScheduleMapper.buildSchedule(scheduleDto)
@@ -93,11 +98,14 @@ class EventController : UUIDValid() {
                 val classroom = classroomRepository.findById(UUID.fromString(scheduleDto.classroomId)).orElseThrow()
                 schedule.classroom = classroom
             }
-            schedule // Retorno implícito
+            schedule
         }
 
-        eventService.addSchedules(event,builtSchedules)
-        eventService.addPeriod(event, eventDTO.periodID)
+        eventService.addSchedules(event, builtSchedules)
+
+        if (!eventDTO.periodID.isNullOrBlank()) {
+            eventService.addPeriod(event, eventDTO.periodID)
+        }
 
         val newEvent = eventService.create(event)
 
@@ -128,7 +136,7 @@ class EventController : UUIDValid() {
     @PutMapping
     @Operation(summary = "Edit an event by ID")
     fun editEvent(
-                  @RequestBody @Valid eventDTO: EventRequestDto
+        @RequestBody @Valid eventDTO: EventRequestDto
     ): ResponseEntity<CustomResponse> {
         requireNotNull(eventDTO.id) { "El ID del evento no debe ser nulo" }
 

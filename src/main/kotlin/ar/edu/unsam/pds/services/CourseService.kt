@@ -26,7 +26,7 @@ class CourseService(
         }
 
         val queryResults = normalizedQueries.map {
-            courseRepository.searchByNameOrProgramOrProfessor(it).distinctBy { course -> course.id }
+            courseRepository.searchByNameOrProgramOrProfessorOrEvent(it).distinctBy { course -> course.id }
         }
 
         val matchingIds = queryResults
