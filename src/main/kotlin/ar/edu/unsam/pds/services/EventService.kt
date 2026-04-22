@@ -150,4 +150,23 @@ class EventService(
             eventRepository.delete(eventToDelete)
         }
     }
+
+    fun getPendingRequests(): List<Event> {
+        return eventRepository.findByIsApprovedIsNull()
+    }
+
+    @Transactional
+    fun approve(id: String): Event {
+        val event = findByID(id)
+        event.isApproved = true
+        return eventRepository.save(event)
+    }
+
+    @Transactional
+    fun reject(id: String): Event {
+        val event = findByID(id)
+        event.isApproved = false
+        return eventRepository.save(event)
+    }
+
 }
