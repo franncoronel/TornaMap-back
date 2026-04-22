@@ -38,7 +38,7 @@ class CourseService(
             .filter { it.id in matchingIds }
             .distinctBy { it.id }
             .sortedWith(
-                compareBy<Course>(
+                compareBy(
                     { if (it.events.isNotEmpty()) 0 else 1 },
                     { it.name.lowercase() }
                 )
