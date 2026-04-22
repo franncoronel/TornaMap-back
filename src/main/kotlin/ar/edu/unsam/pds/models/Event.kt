@@ -1,8 +1,6 @@
 package ar.edu.unsam.pds.models
-
-import ar.edu.unsam.pds.exceptions.ValidationException
-import ar.edu.unsam.pds.models.enums.ClassroomType
 import ar.edu.unsam.pds.models.enums.EventType
+import ar.edu.unsam.pds.exceptions.ValidationException
 import jakarta.persistence.*
 import org.springframework.lang.Nullable
 import java.io.Serializable
@@ -19,9 +17,12 @@ class Event(
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     var course: Course? = null,
 
-    val type: EventType,
+    @Enumerated(EnumType.STRING)
+    var type: EventType = EventType.CURSADA,
 
-    val details: String? = null
+    var details: String = "",
+    var customPeriodStart: LocalDate? = null,
+    var customPeriodEnd: LocalDate? = null,
 ) : Timestamp(), Serializable {
 
     @OneToMany(mappedBy = "event", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
@@ -35,53 +36,43 @@ class Event(
     @Nullable
     var period: Period? = null
 
-
-    fun addUserToSchedule(schedule:Schedule, user:User) {
+    fun addUserToSchedule(schedule: Schedule, user: User) {
         validateScheduleInEvent(schedule)
         schedule.assignUserToSchedule(user, schedule)
     }
 
-    private fun hasUpcomingSchedules():Boolean = schedules.any { it.date?.isAfter(LocalDate.now()) ?: false }
+    private fun hasUpcomingSchedules(): Boolean =
+        schedules.any { it.date?.isAfter(LocalDate.now()) ?: false }
 
     fun attachCourse(course: Course) {
         this.course = course
     }
 
     fun getCourseName(): String {
-        if (course == null) {
-            throw ValidationException("No course specified")
-        }
-        return course!!.name
+        return course?.name ?: ""
     }
 
     fun addPeriod(period: Period) {
         this.period = period
     }
 
-//    fun addUser(user: User) {
-//        if (validateUserId(user)) {
-//            throw ValidationException("El usuario ya es parte de este evento")
-//        }
-//        users.add(user)
-//    }
-
     fun getProgramNames(): List<String> {
-        if (course == null) {
-            throw ValidationException("No course specified")
-        }
-        return course!!.programNames()
+        return course?.programNames() ?: emptyList()
     }
 
-    fun getProfessorNames(): Set<String> = schedules.flatMap { it.getUserNames() }.toSet()
+    fun getProfessorNames(): Set<String> =
+        schedules.flatMap { it.getUserNames() }.toSet()
 
     fun addSchedule(schedule: Schedule) {
         schedule.event = this
         schedules.add(schedule)
     }
-    fun removeSchedule(schedule: Schedule){
+
+    fun removeSchedule(schedule: Schedule) {
         validateScheduleInEvent(schedule)
         schedules.remove(schedule)
     }
+
     fun addSchedules(list: Collection<Schedule>) {
         list.forEach { addSchedule(it) }
     }
