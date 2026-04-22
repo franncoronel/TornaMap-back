@@ -1,5 +1,5 @@
 package ar.edu.unsam.pds.models
-
+import ar.edu.unsam.pds.models.enums.EventType
 import ar.edu.unsam.pds.exceptions.ValidationException
 import ar.edu.unsam.pds.models.user.User
 import jakarta.persistence.*
@@ -17,8 +17,14 @@ class Event(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", referencedColumnName = "id")
-    var course: Course,
+    var course: Course? = null,
 
+    @Enumerated(EnumType.STRING)
+    var type: EventType = EventType.CURSADA,
+
+    var details: String = "",
+    var customPeriodStart: LocalDate? = null,
+    var customPeriodEnd: LocalDate? = null,
 ) : Timestamp(), Serializable {
 
 
@@ -34,18 +40,22 @@ class Event(
     @Nullable
     var period: Period? = null
 
-    fun addUserToSchedule(schedule:Schedule, user: User) {
+    fun addUserToSchedule(schedule: Schedule, user: User) {
         validateScheduleInEvent(schedule)
         schedule.assignUserToSchedule(user, schedule)
     }
 
-    private fun hasUpcomingSchedules():Boolean = schedules.any { it.date?.isAfter(LocalDate.now()) ?: false }
+    private fun hasUpcomingSchedules(): Boolean =
+        schedules.any { it.date?.isAfter(LocalDate.now()) ?: false }
 
     fun attachCourse(course: Course) {
         this.course = course
     }
 
-    fun getCourseName(): String = course.name
+    fun getCourseName(): String {
+        return course?.name ?: ""
+    }
+
     fun addPeriod(period: Period) {
         this.period = period
     }
@@ -62,16 +72,19 @@ class Event(
 
     fun getProgramNames(): List<String> = course.programNames()
 
-    fun getProfessorNames(): Set<String> = schedules.flatMap { it.getUserNames() }.toSet()
+    fun getProfessorNames(): Set<String> =
+        schedules.flatMap { it.getUserNames() }.toSet()
 
     fun addSchedule(schedule: Schedule) {
         schedule.event = this
         schedules.add(schedule)
     }
-    fun removeSchedule(schedule: Schedule){
+
+    fun removeSchedule(schedule: Schedule) {
         validateScheduleInEvent(schedule)
         schedules.remove(schedule)
     }
+
     fun addSchedules(list: Collection<Schedule>) {
         list.forEach { addSchedule(it) }
     }
