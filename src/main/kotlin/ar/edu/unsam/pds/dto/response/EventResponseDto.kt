@@ -8,7 +8,7 @@ data class EventResponseDto(
     var isApproved: Boolean?,
     var isCancelled: Boolean,
     val courseName: String,
-    val programNames: List<String>,
+    val programNames: List<String>?,
     val schedules: List<ScheduleResponseDto>,
     val type: String,
 )
@@ -35,7 +35,7 @@ data class EventDetailResponseDto(
 
     // ---- sólo para mostrar (opcional) ----
     val courseName: String,
-    val programNames: List<String>,
+    val programNames: List<String>?,
 
     // ---- horarios ----
     val schedules: List<ScheduleResponseDto>,
