@@ -1,5 +1,6 @@
 package ar.edu.unsam.pds.bootstrap
 
+import ar.edu.unsam.pds.models.Role
 import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.repository.UserRepository
 import ar.edu.unsam.pds.security.models.Principal
@@ -30,7 +31,8 @@ class InitUser : BootstrapGeneric("users") {
                     lastName = "Admin",
                     email = "admin@admin.com",
                     image = storageService.defaultImage(),
-                    isAdmin = true
+                    isAdmin = true,
+                    role = Role.ADMIN
                 )
                 this.initProperties()
             }
@@ -45,7 +47,8 @@ class InitUser : BootstrapGeneric("users") {
                     lastName = "D'Fabio",
                     email = "ldfabio@unsam.edu.ar",
                     image = storageService.defaultImage(),
-                    isAdmin = true
+                    isAdmin = true,
+                    role = Role.ADMIN
                 )
                 this.initProperties()
             }
@@ -59,7 +62,8 @@ class InitUser : BootstrapGeneric("users") {
                     name = "Maria Claudia",
                     lastName = "Abeledo",
                     email = "mabeledo@unsam.edu.ar",
-                    image = storageService.defaultImage()
+                    image = storageService.defaultImage(),
+                    role = Role.PROFESSOR
                 )
                 this.initProperties()
             }
@@ -71,7 +75,8 @@ class InitUser : BootstrapGeneric("users") {
                 name = "Carlos",
                 lastName = "Scirica",
                 email = "cscirica@estudiantes.unsam.edu.ar",
-                image = storageService.defaultImage()
+                image = storageService.defaultImage(),
+                role = Role.PROFESSOR
             )
         )
 
@@ -80,7 +85,8 @@ class InitUser : BootstrapGeneric("users") {
                 name = "Fernando",
                 lastName = "Dodino",
                 email = "dodain@estudiantes.unsam.edu.ar",
-                image = storageService.defaultImage()
+                image = storageService.defaultImage(),
+                role = Role.PROFESSOR
             )
         )
 
@@ -89,7 +95,8 @@ class InitUser : BootstrapGeneric("users") {
                 name = "Gaston",
                 lastName = "Aguilera",
                 email = "gAguilera@estudiantes.unsam.edu.ar",
-                image = storageService.defaultImage()
+                image = storageService.defaultImage(),
+                role = Role.PROFESSOR
             )
         )
         userRepository.save(
@@ -97,7 +104,8 @@ class InitUser : BootstrapGeneric("users") {
                 name = "Pedro Facundo",
                 lastName = "Iriso",
                 email = "pedroiriso@gmail.com",
-                image = storageService.defaultImage()
+                image = storageService.defaultImage(),
+                role = Role.PROFESSOR
             )
         )
         userRepository.save(
@@ -105,7 +113,8 @@ class InitUser : BootstrapGeneric("users") {
                 name = "Fabio Sergio",
                 lastName = " Bruschetti",
                 email = "fSBruschetti@estudiantes.unsam.edu.ar",
-                image = storageService.defaultImage()
+                image = storageService.defaultImage(),
+                role = Role.PROFESSOR
             )
         )
 
@@ -114,7 +123,8 @@ class InitUser : BootstrapGeneric("users") {
                 name = "Monica",
                 lastName = "Hencek",
                 email = "mHencek@estudiantes.unsam.edu.ar",
-                image = storageService.defaultImage()
+                image = storageService.defaultImage(),
+                role = Role.PROFESSOR
             )
         )
         userRepository.save(
@@ -122,7 +132,77 @@ class InitUser : BootstrapGeneric("users") {
                 name = "Juan José",
                 lastName = "López",
                 email = "jJLopez@estudiantes.unsam.edu.ar",
-                image = storageService.defaultImage()
+                image = storageService.defaultImage(),
+                role = Role.PROFESSOR
+            )
+        )
+        userRepository.save(
+            User(
+                name = "Juana",
+                lastName = "Correa Luna",
+                email = "jcorrealuna@estudiantes.unsam.edu.ar",
+                image = storageService.defaultImage(),
+                role = Role.STUDENT
+            )
+        )
+
+        userRepository.save(
+            User(
+                name = "Carla",
+                lastName = "Rocca",
+                email = "crocca@estudiantes.unsam.edu.ar",
+                image = storageService.defaultImage(),
+                role = Role.STUDENT
+            )
+        )
+
+        userRepository.save(
+            User(
+                name = "Joaquin",
+                lastName = "Navarro",
+                email = "jnavarro@estudiantes.unsam.edu.ar",
+                image = storageService.defaultImage(),
+                role = Role.STUDENT
+            )
+        )
+
+        userRepository.save(
+            User(
+                name = "Melody",
+                lastName = "Oviedo Morales",
+                email = "moviedomorales@estudiantes.unsam.edu.ar",
+                image = storageService.defaultImage(),
+                role = Role.STUDENT
+            )
+        )
+
+        userRepository.save(
+            User(
+                name = "Francisco",
+                lastName = "Coronel",
+                email = "fcoronel@estudiantes.unsam.edu.ar",
+                image = storageService.defaultImage(),
+                role = Role.STUDENT
+            )
+        )
+
+        userRepository.save(
+            User(
+                name = "Gabriel",
+                lastName = "Tarquini",
+                email = "gtarquini@estudiantes.unsam.edu.ar",
+                image = storageService.defaultImage(),
+                role = Role.STUDENT
+            )
+        )
+
+        userRepository.save(
+            User(
+                name = "Tomas",
+                lastName = "Aragusuku",
+                email = "taragusuku@estudiantes.unsam.edu.ar",
+                image = storageService.defaultImage(),
+                role = Role.STUDENT
             )
         )
     }
