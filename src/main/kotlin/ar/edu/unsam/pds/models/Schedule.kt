@@ -1,6 +1,5 @@
 package ar.edu.unsam.pds.models
 
-import ar.edu.unsam.pds.models.user.User
 import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.*
 import java.io.Serializable

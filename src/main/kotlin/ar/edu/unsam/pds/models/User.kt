@@ -1,9 +1,5 @@
-package ar.edu.unsam.pds.models.user
+package ar.edu.unsam.pds.models
 
-import ar.edu.unsam.pds.models.Course
-import ar.edu.unsam.pds.models.Program
-import ar.edu.unsam.pds.models.Schedule
-import ar.edu.unsam.pds.models.Timestamp
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType

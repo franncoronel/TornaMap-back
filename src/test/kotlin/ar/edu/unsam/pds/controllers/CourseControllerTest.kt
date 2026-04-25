@@ -1,7 +1,7 @@
 package ar.edu.unsam.pds.controllers
 
 import ar.edu.unsam.pds.models.Course
-import ar.edu.unsam.pds.models.user.User
+import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.security.models.Principal
 import ar.edu.unsam.pds.services.CourseService
 import org.junit.jupiter.api.BeforeEach

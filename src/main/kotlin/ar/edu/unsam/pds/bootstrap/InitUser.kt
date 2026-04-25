@@ -1,6 +1,6 @@
 package ar.edu.unsam.pds.bootstrap
 
-import ar.edu.unsam.pds.models.user.User
+import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.repository.UserRepository
 import ar.edu.unsam.pds.security.models.Principal
 import ar.edu.unsam.pds.security.repository.PrincipalRepository
