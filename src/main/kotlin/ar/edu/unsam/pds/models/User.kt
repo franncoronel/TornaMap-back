@@ -32,16 +32,16 @@ class User(
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "app_student_program",
-        joinColumns = [JoinColumn(name = "student_id")],
+        name = "app_user_program",
+        joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "program_id")]
     )
     val programs: MutableSet<Program> = mutableSetOf()
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "app_professor_course",
-        joinColumns = [JoinColumn(name = "professor_id")],
+        name = "app_user_course",
+        joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "course_id")]
     )
     val courses: MutableSet<Course> = mutableSetOf()
