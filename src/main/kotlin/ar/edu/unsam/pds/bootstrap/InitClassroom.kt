@@ -22,6 +22,33 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val tornavias = findBuildingByName("Tornavías")
         val its = findBuildingByName("ITS")
 
+        // Subsuelo - Tornavias
+        val aulaA25 = Classroom(
+            code = "TOR-A25",
+            name = "Aula A25 - Laboratorio de Artes Digitales",
+            capacity = 30,
+            floor = -1,
+            type = ClassroomType.CLASSROOM,
+            building = tornavias
+        )
+
+        val aulaA26 = Classroom(
+            code = "TOR-A26",
+            name = "Aula A26",
+            capacity = 30,
+            floor = -1,
+            type = ClassroomType.CLASSROOM,
+            building = tornavias
+        )
+
+        val aulaA27 = Classroom(
+            code = "TOR-A27",
+            name = "Aula A27",
+            capacity = 30,
+            floor = -1,
+            type = ClassroomType.CLASSROOM,
+            building = tornavias
+        )
 
         val aulaA28 = Classroom(
             code = "TOR-A28",
@@ -32,23 +59,40 @@ class InitClassroom : BootstrapGeneric("Classroom") {
             building = tornavias
         )
 
-        val salaLectura = Classroom(
-            code = "TOR-SAL",
-            name = "Sala de Lectura",
+        val aulaA29 = Classroom(
+            code = "TOR-A29",
+            name = "Aula A29",
+            capacity = 30,
+            floor = -1,
+            type = ClassroomType.CLASSROOM,
+            building = tornavias
+        )
+
+        val sum = Classroom(
+            code = "TOR-SUM",
+            name = "SUM",
             capacity = 20,
             floor = 1,
             type = ClassroomType.LECTURE,
             building = tornavias
         )
 
-        val carpaAuditorio = Classroom(
-            code = "TOR-CAR",
-            name = "Carpa Auditorio",
+        val auditorioLecturaMundi = Classroom(
+            code = "TOR-ALM",
+            name = "Auditorio Lectura Mundi",
             capacity = 100,
             floor = 0,
             type = ClassroomType.AUDITORIUM,
             building = tornavias
         )
+
+        classroomRepository.save(aulaA25)
+        classroomRepository.save(aulaA26)
+        classroomRepository.save(aulaA27)
+        classroomRepository.save(aulaA28)
+        classroomRepository.save(aulaA29)
+        classroomRepository.save(sum)
+        classroomRepository.save(auditorioLecturaMundi)
 
         //PLANTA BAJA
         val aulaA10 = Classroom(
@@ -307,15 +351,15 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         )
         classroomRepository.save(laboQuimica)
 
-        val laboBiologia= Classroom(
-            code = "TOR-LB",
-            name = "Laboratorio de Biologia",
-            capacity = 50,
+        val camaraGesell= Classroom(
+            code = "TOR-CG",
+            name = "Camara Gesell",
+            capacity = 20,
             floor = 0,
             type = ClassroomType.LABORATORY,
             building = tornavias
         )
-        classroomRepository.save(laboBiologia)
+        classroomRepository.save(camaraGesell)
 
         val laboFisica = Classroom(
             code = "TOR-LF",
@@ -386,6 +430,26 @@ class InitClassroom : BootstrapGeneric("Classroom") {
             building = tornavias
         )
         classroomRepository.save(t02)
+
+        val laboBiologia= Classroom(
+            code = "TOR-LB",
+            name = "Laboratorio de Biologia",
+            capacity = 50,
+            floor = 0,
+            type = ClassroomType.LABORATORY,
+            building = tornavias
+        )
+        classroomRepository.save(laboBiologia)
+
+        val ingenieriaEnEnergia= Classroom(
+            code = "TOR-IEN",
+            name = "Ingenieria en Energia",
+            capacity = 50,
+            floor = 0,
+            type = ClassroomType.LABORATORY,
+            building = tornavias
+        )
+        classroomRepository.save(ingenieriaEnEnergia)
 
         //1° PISO
         val cidi = Classroom(
@@ -587,11 +651,18 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         )
         classroomRepository.save(t06)
 
+        val institutoDeTransporte = Classroom(
+            code = "TOR-IDT",
+            name = "Instituto De Transporte",
+            capacity = 50,
+            floor = 1,
+            type = ClassroomType.CLASSROOM,
+            building = tornavias
+        )
+        classroomRepository.save(institutoDeTransporte)
+
         classroomRepository.save(cidi)
         classroomRepository.save(aulaA10)
-        classroomRepository.save(aulaA28)
-        classroomRepository.save(salaLectura)
-        classroomRepository.save(carpaAuditorio)
         classroomRepository.save(aulaA6)
         classroomRepository.save(aulaA7)
         classroomRepository.save(aulaA5)
