@@ -8,7 +8,7 @@ import ar.edu.unsam.pds.dto.response.CourseResponseDto
 import ar.edu.unsam.pds.dto.response.SubscriptionResponseDto
 import ar.edu.unsam.pds.dto.response.UserResponseDto
 import ar.edu.unsam.pds.mappers.UserMapper
-import ar.edu.unsam.pds.models.user.User
+import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.services.UserService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
