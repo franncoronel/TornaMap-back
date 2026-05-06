@@ -23,7 +23,7 @@ class User(
     @Column(unique = true) var email: String,
     var image: String = "",
     var isAdmin: Boolean = false,
-    val role: Role
+    val role: Role? = null
 
 ) : Timestamp(), Serializable {
     @Id
