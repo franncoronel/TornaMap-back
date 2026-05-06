@@ -132,7 +132,6 @@ class EventController : UUIDValid() {
         )
     }
 
-
     @PutMapping
     @Operation(summary = "Edit an event by ID")
     fun editEvent(
@@ -146,6 +145,41 @@ class EventController : UUIDValid() {
             CustomResponse(
                 message = "Event editado con éxito",
                 data = EventMapper.buildEventDto(updatedEvent)
+            )
+        )
+    }
+
+    @GetMapping("/pending")
+    @Operation(summary = "Get all pending event requests")
+    fun getPendingRequests(): ResponseEntity<CustomResponse> {
+        return ResponseEntity.status(200).body(
+            CustomResponse(
+                message = "Solicitudes pendientes obtenidas con éxito",
+                data = eventService.getPendingRequests().map { EventMapper.buildEventDto(it) }
+            )
+        )
+    }
+
+    @PostMapping("/{id}/approve")
+    @Operation(summary = "Approve a pending event request")
+    fun approveEvent(@PathVariable id: String): ResponseEntity<CustomResponse> {
+        validatedUUID(id)
+        return ResponseEntity.status(200).body(
+            CustomResponse(
+                message = "Evento aprobado con éxito",
+                data = EventMapper.buildEventDto(eventService.approve(id))
+            )
+        )
+    }
+
+    @PostMapping("/{id}/reject")
+    @Operation(summary = "Reject a pending event request")
+    fun rejectEvent(@PathVariable id: String): ResponseEntity<CustomResponse> {
+        validatedUUID(id)
+        return ResponseEntity.status(200).body(
+            CustomResponse(
+                message = "Evento rechazado con éxito",
+                data = EventMapper.buildEventDto(eventService.reject(id))
             )
         )
     }

@@ -68,7 +68,7 @@ interface EventRepository : JpaRepository<Event, UUID> {
 
     fun existsByPeriodId(periodId: UUID): Boolean
 
-    //lista de eventos pendientes de aprobacion
+    @EntityGraph(attributePaths = ["schedules", "course", "course.programs", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
     fun findByIsApprovedIsNull(): List<Event>
 
 }
