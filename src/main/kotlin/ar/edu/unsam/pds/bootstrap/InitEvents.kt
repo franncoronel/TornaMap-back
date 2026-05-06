@@ -12,6 +12,7 @@ import ar.edu.unsam.pds.models.Period
 import ar.edu.unsam.pds.repository.PeriodRepository
 import org.springframework.context.annotation.Profile
 import java.time.LocalDate
+import ar.edu.unsam.pds.models.enums.EventType
 
 @Component(value = "InitEvents.beanName")
 @DependsOn(value = ["InitCourses.beanName", "InitPrograms.beanName"])
@@ -20,8 +21,11 @@ class InitEvents : BootstrapGeneric("Events") {
     @Autowired
     private lateinit var periodRepository: PeriodRepository
 
-    @Autowired private lateinit var programRepository: ProgramRepository
-    @Autowired private lateinit var eventRepository: EventRepository
+    @Autowired
+    private lateinit var programRepository: ProgramRepository
+
+    @Autowired
+    private lateinit var eventRepository: EventRepository
 
     override fun doAfterPropertiesSet() {
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -61,7 +65,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaMate1TM = Event(
             name = "Turno Mañana",
             isApproved = true,
-            course = mate1!!
+            course = mate1!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -70,7 +75,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaMate1TT = Event(
             name = "Turno Tarde",
             isApproved = true,
-            course = mate1
+            course = mate1,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -79,7 +85,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaMate1TN = Event(
             name = "Turno Noche",
             isApproved = true,
-            course = mate1
+            course = mate1,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -88,7 +95,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaMate2 = Event(
             name = "Cursada Matemática II",
             isApproved = true,
-            course = mate2!!
+            course = mate2!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -97,7 +105,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaMate3 = Event(
             name = "Cursada Matemática III",
             isApproved = true,
-            course = mate3!!
+            course = mate3!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -107,6 +116,7 @@ class InitEvents : BootstrapGeneric("Events") {
             name = "Mate III - Comisión B",
             isApproved = true,
             course = mate3,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -115,7 +125,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaAlgo1 = Event(
             name = "Cursada Algoritmos I",
             isApproved = true,
-            course = algo1!!
+            course = algo1!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -124,7 +135,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaAlgo2 = Event(
             name = "Cursada Algoritmos II",
             isApproved = true,
-            course = algo2!!
+            course = algo2!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -133,7 +145,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val redes = Event(
             name = "Cursada Telecomunicaciones y Redes",
             isApproved = true,
-            course = telecomuncacionesYRedes!!
+            course = telecomuncacionesYRedes!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -142,7 +155,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val metodosNum = Event(
             name = "Cursada Métodos Numéricos",
             isApproved = true,
-            course = metodosNumericos!!
+            course = metodosNumericos!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -151,7 +165,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val phm = Event(
             name = "Cursada PHM",
             isApproved = true,
-            course = progHerrModer!!
+            course = progHerrModer!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -160,7 +175,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val proyecDeSoft = Event(
             name = "Cursada Proyectos de Software",
             isApproved = true,
-            course = proyectosDeSoft!!
+            course = proyectosDeSoft!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -169,43 +185,48 @@ class InitEvents : BootstrapGeneric("Events") {
         val paradigmas = Event(
             name = "Cursada Paradigmas de Programación",
             isApproved = true,
-            course = paradigmasDeProg!!
+            course = paradigmasDeProg!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
         eventRepository.save(paradigmas)
 
-        val cursadaEyMN1= Event(
+        val cursadaEyMN1 = Event(
             name = "Cursada EyM",
             isApproved = true,
-            course = electricidadYMagnetismo!!
+            course = electricidadYMagnetismo!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
         eventRepository.save(cursadaEyMN1)
 
-        val cursadaEyMN2= Event(
+        val cursadaEyMN2 = Event(
             name = "Cursada EyM - lab Jueves",
             isApproved = true,
-            course = electricidadYMagnetismo
+            course = electricidadYMagnetismo,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
         eventRepository.save(cursadaEyMN2)
 
-        val cursadaEyMT= Event(
+        val cursadaEyMT = Event(
             name = "Cursada EyM TT",
             isApproved = true,
-            course = electricidadYMagnetismo
+            course = electricidadYMagnetismo,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
         eventRepository.save(cursadaEyMT)
 
-        val cursadaCASO= Event(
+        val cursadaCASO = Event(
             name = "Cursada CASO",
             isApproved = true,
-            course = caso!!
+            course = caso!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -214,7 +235,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaLabo1 = Event(
             name = "Cursada Labo1",
             isApproved = true,
-            course = laboratorioCompu1!!
+            course = laboratorioCompu1!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -223,7 +245,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaLabo2 = Event(
             name = "Cursada Labo2",
             isApproved = true,
-            course = laboratorioCompu2!!
+            course = laboratorioCompu2!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -232,13 +255,14 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaSPD = Event(
             name = "Cursada SPD",
             isApproved = true,
-            course = spd!!
+            course = spd!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
         eventRepository.save(cursadaSPD)
 
-         /*TPI 2do Cuatri*/
+        /*TPI 2do Cuatri*/
         //TODO:NO BORRAR LO COMENTADO
         /*val cursadaAlgo3 = Event(
              name = "Cursada Algoritmos III",
@@ -271,7 +295,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaRedesInfo1 = Event(
             name = "Cursada Redes de Información I",
             isApproved = true,
-            course = redesInfo1!!
+            course = redesInfo1!!,
+            type = EventType.CURSADA
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -280,7 +305,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaRedesInfo2 = Event(
             name = "Cursada Redes de Información II",
             isApproved = true,
-            course = redesInfo2!!
+            course = redesInfo2!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
@@ -289,56 +315,57 @@ class InitEvents : BootstrapGeneric("Events") {
         val cursadaRedesInfo3 = Event(
             name = "Cursada Redes de Información III",
             isApproved = true,
-            course = redesInfo3!!
+            course = redesInfo3!!,
+            type = EventType.CURSADA,
         ).apply {
             this.addPeriod(primerCuatrimestre)
         }
         eventRepository.save(cursadaRedesInfo3)
 // TODO: NO BORRAR LO COMENTADO
-       /* val cursadaProyecto1 = Event(
-            name = "Cursada Proyecto I",
-            isApproved = true,
-            course = proyecto1!!
-        ).apply {
-            this.addPeriod(primerCuatrimestre)
-        }
-        eventRepository.save(cursadaProyecto1)
+        /* val cursadaProyecto1 = Event(
+             name = "Cursada Proyecto I",
+             isApproved = true,
+             course = proyecto1!!
+         ).apply {
+             this.addPeriod(primerCuatrimestre)
+         }
+         eventRepository.save(cursadaProyecto1)
 
-        val cursadaProyecto2 = Event(
-            name = "Cursada Proyecto II",
-            isApproved = true,
-            course = proyecto2!!
-        ).apply {
-            this.addPeriod(primerCuatrimestre)
-        }
-        eventRepository.save(cursadaProyecto2)
+         val cursadaProyecto2 = Event(
+             name = "Cursada Proyecto II",
+             isApproved = true,
+             course = proyecto2!!
+         ).apply {
+             this.addPeriod(primerCuatrimestre)
+         }
+         eventRepository.save(cursadaProyecto2)
 
-        val cursadaProyecto3 = Event(
-            name = "Cursada Proyecto III",
-            isApproved = true,
-            course = proyecto3!!
-        ).apply {
-            this.addPeriod(primerCuatrimestre)
-        }
-        eventRepository.save(cursadaProyecto3)
+         val cursadaProyecto3 = Event(
+             name = "Cursada Proyecto III",
+             isApproved = true,
+             course = proyecto3!!
+         ).apply {
+             this.addPeriod(primerCuatrimestre)
+         }
+         eventRepository.save(cursadaProyecto3)
 
-        val cursadaAdminRedesCompu = Event(
-            name = "Cursada Administración de Redes de Computadoras",
-            isApproved = true,
-            course = adminRedesCompu!!
-        ).apply {
-            this.addPeriod(primerCuatrimestre)
-        }
-        eventRepository.save(cursadaAdminRedesCompu)
+         val cursadaAdminRedesCompu = Event(
+             name = "Cursada Administración de Redes de Computadoras",
+             isApproved = true,
+             course = adminRedesCompu!!
+         ).apply {
+             this.addPeriod(primerCuatrimestre)
+         }
+         eventRepository.save(cursadaAdminRedesCompu)
 
-        val cursadaSistAvanzadisComunicacion = Event(
-            name = "Cursada Sistemas Avanzados de Comunicación",
-            isApproved = true,
-            course = sistAvanzadisComunicacion!!
-        ).apply {
-            this.addPeriod(primerCuatrimestre)
-        }
-        eventRepository.save(cursadaSistAvanzadisComunicacion)*/
+         val cursadaSistAvanzadisComunicacion = Event(
+             name = "Cursada Sistemas Avanzados de Comunicación",
+             isApproved = true,
+             course = sistAvanzadisComunicacion!!
+         ).apply {
+             this.addPeriod(primerCuatrimestre)
+         }
+         eventRepository.save(cursadaSistAvanzadisComunicacion)*/
 
         //EVENTOS QUE FALTAN SER APROBADOS POR EL ADMINISTRADOR
 

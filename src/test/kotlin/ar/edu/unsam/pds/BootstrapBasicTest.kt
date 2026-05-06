@@ -2,7 +2,7 @@ package ar.edu.unsam.pds
 
 import ar.edu.unsam.pds.models.*
 import ar.edu.unsam.pds.models.enums.RecurrenceWeeks
-import ar.edu.unsam.pds.models.user.User
+import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.security.models.Principal
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder

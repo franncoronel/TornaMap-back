@@ -51,7 +51,6 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         )
 
         //PLANTA BAJA
-
         val aulaA10 = Classroom(
             code = "A10",
             name = "Aula A10 - Tornavías",

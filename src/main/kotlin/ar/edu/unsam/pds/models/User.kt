@@ -1,7 +1,5 @@
-package ar.edu.unsam.pds.models.user
+package ar.edu.unsam.pds.models
 
-import ar.edu.unsam.pds.models.Schedule
-import ar.edu.unsam.pds.models.Timestamp
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
@@ -25,10 +23,29 @@ class User(
     @Column(unique = true) var email: String,
     var image: String = "",
     var isAdmin: Boolean = false,
+    val role: Role
+
 ) : Timestamp(), Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     lateinit var id: UUID
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "app_user_program",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "program_id")]
+    )
+    val programs: MutableSet<Program> = mutableSetOf()
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "app_user_course",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "course_id")]
+    )
+    val courses: MutableSet<Course> = mutableSetOf()
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -43,4 +60,8 @@ class User(
         return "$name $lastName"
     }
 
+}
+
+enum class Role {
+    ADMIN, STUDENT, PROFESSOR
 }
