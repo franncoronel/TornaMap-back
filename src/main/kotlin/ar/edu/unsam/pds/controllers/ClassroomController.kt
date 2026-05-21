@@ -26,4 +26,15 @@ class ClassroomController : UUIDValid() {
         )
     }
 
+    @GetMapping
+    @Operation(summary = "Get all classrooms")
+    fun getAll(): ResponseEntity<CustomResponse> {
+        return ResponseEntity.status(200).body(
+            CustomResponse(
+                message = "Aulas obtenidas con exito",
+                data = classroomService.getAll().map { ClassroomMapper.buildClassroomDto(it) }
+            )
+        )
+    }
+
 }

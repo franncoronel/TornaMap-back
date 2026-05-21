@@ -15,4 +15,8 @@ class ClassroomService(
         }
     }
 
+    fun getAll(): List<Classroom> {
+        return classroomRepository.findAll()
+    }
+
 }
