@@ -46,7 +46,12 @@ class Principal : UserDetails {
     override fun isEnabled(): Boolean = enabled!!
 
     override fun getAuthorities(): Collection<GrantedAuthority> {
-        val role = if (this.getUser().isAdmin) "ROLE_ADMIN" else "ROLE_USER"
+        val role = when (this.getUser().role) {
+            ar.edu.unsam.pds.models.Role.ADMIN -> "ROLE_ADMIN"
+            ar.edu.unsam.pds.models.Role.PROFESSOR -> "ROLE_PROFESSOR"
+            ar.edu.unsam.pds.models.Role.STUDENT -> "ROLE_STUDENT"
+            null -> "ROLE_USER"
+        }
         return mutableListOf(SimpleGrantedAuthority(role))
     }
     // endregion @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

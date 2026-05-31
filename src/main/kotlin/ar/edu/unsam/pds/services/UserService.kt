@@ -60,7 +60,7 @@ class UserService(
             lastName = form.lastName,
             email = form.email,
             image = storageService.defaultImage(),
-            isAdmin = form.isAdmin,
+            role = form.role
         )
         userRepository.save(newUser)
 
