@@ -3,8 +3,10 @@ package ar.edu.unsam.pds.services
 import ar.edu.unsam.pds.dto.request.LoginForm
 import ar.edu.unsam.pds.dto.request.RegisterFormDto
 import ar.edu.unsam.pds.dto.request.UserRequestUpdateDto
+import ar.edu.unsam.pds.dto.response.UserResponseDto
 import ar.edu.unsam.pds.exceptions.InternalServerError
 import ar.edu.unsam.pds.exceptions.NotFoundException
+import ar.edu.unsam.pds.mappers.UserMapper
 import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.repository.UserRepository
 import ar.edu.unsam.pds.security.models.Principal
@@ -32,7 +34,7 @@ class UserService(
         return userRepository.findAllByOrderByNameAsc()
     }
 
-    fun login(user: LoginForm, request: HttpServletRequest, response: HttpServletResponse): UUID {
+    fun login(user: LoginForm, request: HttpServletRequest, response: HttpServletResponse): UserResponseDto {
         try {
             request.login(user.email, user.password)
         } catch (e: ServletException) {
@@ -45,7 +47,8 @@ class UserService(
             rememberMeServices.loginSuccess(request, response, auth)
         }
 
-        return (auth.principal as Principal).getUser().id
+        val loggedUser = (auth.principal as Principal).getUser()
+        return UserMapper.buildUserDto(loggedUser)   // ← devuelve el UserResponseDto con role
     }
 
     @Transactional

@@ -127,24 +127,51 @@ class InitUser : BootstrapGeneric("users") {
                 role = Role.PROFESSOR
             )
         )
-        userRepository.save(
-            User(
-                name = "Juan José",
-                lastName = "López",
-                email = "jJLopez@estudiantes.unsam.edu.ar",
-                image = storageService.defaultImage(),
-                role = Role.PROFESSOR
-            )
+        principalRepository.save(
+            Principal().apply {
+                username="jJLopez@estudiantes.unsam.edu.ar"
+                password= encode("profesor123")
+                user=   User(
+                    name = "Juan José",
+                    lastName = "López",
+                    email = "jJLopez@estudiantes.unsam.edu.ar",
+                    image = storageService.defaultImage(),
+                    role = Role.PROFESSOR
+                )
+                this.initProperties()
+            }
         )
-        userRepository.save(
-            User(
+        principalRepository.save(
+            Principal().apply {
+                username = "jcorrealuna@estudiantes.unsam.edu.ar"
+                password = encode("unsam123")
+                user=  User(
                 name = "Juana",
                 lastName = "Correa Luna",
                 email = "jcorrealuna@estudiantes.unsam.edu.ar",
                 image = storageService.defaultImage(),
                 role = Role.STUDENT
             )
+                this.initProperties()
+            }
+
         )
+        /*
+        *  principalRepository.save(
+            Principal().apply {
+                username = "admin@admin.com"
+                password = encode("AdministradorUNSAM1234!")
+                user = User(
+                    name = "Admin",
+                    lastName = "Admin",
+                    email = "admin@admin.com",
+                    image = storageService.defaultImage(),
+                    isAdmin = true,
+                    role = Role.ADMIN
+                )
+                this.initProperties()
+            }
+        )*/
 
         userRepository.save(
             User(
