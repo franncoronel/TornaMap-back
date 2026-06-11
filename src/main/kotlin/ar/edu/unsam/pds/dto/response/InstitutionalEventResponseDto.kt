@@ -12,8 +12,7 @@ data class InstitutionalEventResponseDto(
     val startTime: String?,
     val endTime: String?,
     val location: String?,
-    val isVirtual: Boolean,
-    val professors: List<String>,
+    val isVirtual: Boolean
 )
 
 data class InstitutionalEventsResponseDto(

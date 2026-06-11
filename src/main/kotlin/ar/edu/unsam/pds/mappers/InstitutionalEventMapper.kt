@@ -22,8 +22,7 @@ object InstitutionalEventMapper {
                 schedule?.classroom?.let {
                     "${it.name} - ${it.building?.name ?: ""}"
                 },
-            isVirtual = schedule?.isVirtual ?: false,
-            professors = schedule?.assignedUsers?.map { "${it.lastName}, ${it.name}" } ?: emptyList()
+            isVirtual = schedule?.isVirtual ?: false
         )
     }
 }
