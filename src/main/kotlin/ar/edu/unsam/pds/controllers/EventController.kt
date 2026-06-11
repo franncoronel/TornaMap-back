@@ -3,6 +3,7 @@ package ar.edu.unsam.pds.controllers
 import ar.edu.unsam.pds.dto.request.EventRequestDto
 import ar.edu.unsam.pds.dto.response.CustomResponse
 import ar.edu.unsam.pds.mappers.EventMapper
+import ar.edu.unsam.pds.mappers.InstitutionalEventMapper
 import ar.edu.unsam.pds.mappers.ScheduleMapper
 import ar.edu.unsam.pds.repository.ClassroomRepository
 import ar.edu.unsam.pds.services.CourseService
@@ -180,6 +181,17 @@ class EventController : UUIDValid() {
             CustomResponse(
                 message = "Evento rechazado con éxito",
                 data = EventMapper.buildEventDto(eventService.reject(id))
+            )
+        )
+    }
+
+    @GetMapping("/institutional")
+    @Operation(summary = "Get institutional events")
+    fun getInstitutionalEvents(): ResponseEntity<CustomResponse> {
+        return ResponseEntity.ok(
+            CustomResponse(
+                message = "Eventos institucionales obtenidos con éxito",
+                data = eventService.getInstitutionalEvents()
             )
         )
     }
