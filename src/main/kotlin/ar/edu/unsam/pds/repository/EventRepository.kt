@@ -71,4 +71,52 @@ interface EventRepository : JpaRepository<Event, UUID> {
     @EntityGraph(attributePaths = ["schedules", "course", "course.programs", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
     fun findByIsApprovedIsNull(): List<Event>
 
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date = CURRENT_DATE
+          AND s.startTime <= CURRENT_TIME
+          AND s.endTime >= CURRENT_TIME
+    """)
+    fun findCurrentInstitutionalEvents(): List<Event>   //Eventos  de hoy que ya empezaron y todavía no terminaron
+
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date = CURRENT_DATE
+          AND s.startTime > CURRENT_TIME
+    """)
+    fun findPendingTodayInstitutionalEvents(): List<Event>  //Eventos sin iniciar
+
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date = CURRENT_DATE
+          AND s.endTime < CURRENT_TIME
+    """)
+    fun findFinishedTodayInstitutionalEvents(): List<Event> //Eventos que ya terminaron
+
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date > CURRENT_DATE
+          AND s.date <= :endDate
+    """)
+    fun findUpcomingInstitutionalEvents(@Param("endDate") endDate: LocalDate): List<Event>  //Eventos que ocurren durante la semana
 }
