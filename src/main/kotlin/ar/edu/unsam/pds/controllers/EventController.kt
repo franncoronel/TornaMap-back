@@ -185,13 +185,13 @@ class EventController : UUIDValid() {
         )
     }
 
-    @GetMapping("/institutional")
-    @Operation(summary = "Get institutional events")
-    fun getInstitutionalEvents(): ResponseEntity<CustomResponse> {
+    @GetMapping("/institutional/today")
+    @Operation(summary = "Get information on the day's institutional events")
+    fun getInstitutionalEventsDashboard(): ResponseEntity<CustomResponse> {
         return ResponseEntity.ok(
             CustomResponse(
-                message = "Eventos institucionales obtenidos con éxito",
-                data = eventService.getInstitutionalEvents()
+                message = "Eventos institucionales del día obtenidos con éxito",
+                data = eventService.getInstitutionalEventsDashboard()
             )
         )
     }

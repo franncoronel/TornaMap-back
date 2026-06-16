@@ -82,7 +82,7 @@ interface EventRepository : JpaRepository<Event, UUID> {
           AND s.startTime <= CURRENT_TIME
           AND s.endTime >= CURRENT_TIME
     """)
-    fun findCurrentInstitutionalEvents(): List<Event>   //Eventos  de hoy que ya empezaron y todavía no terminaron
+    fun findInstitutionalEventsInProgressToday(): List<Event>   //Eventos  de hoy que ya empezaron y todavía no terminaron
 
     @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
     @Query("""
@@ -94,7 +94,7 @@ interface EventRepository : JpaRepository<Event, UUID> {
           AND s.date = CURRENT_DATE
           AND s.startTime > CURRENT_TIME
     """)
-    fun findPendingTodayInstitutionalEvents(): List<Event>  //Eventos sin iniciar
+    fun findTodayNotStartedInstitutionalEvents(): List<Event>  //Eventos sin iniciar
 
     @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
     @Query("""
@@ -118,5 +118,5 @@ interface EventRepository : JpaRepository<Event, UUID> {
           AND s.date > CURRENT_DATE
           AND s.date <= :endDate
     """)
-    fun findUpcomingInstitutionalEvents(@Param("endDate") endDate: LocalDate): List<Event>  //Eventos que ocurren durante la semana
+    fun findInstitutionalEventsForNextDays(@Param("endDate") endDate: LocalDate): List<Event>  //Eventos que ocurren durante la semana
 }

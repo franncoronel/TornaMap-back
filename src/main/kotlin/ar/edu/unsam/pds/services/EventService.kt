@@ -158,14 +158,14 @@ class EventService(
         return eventRepository.save(event)
     }
 
-    fun getInstitutionalEvents(): InstitutionalEventsResponseDto {
+    fun getInstitutionalEventsDashboard(): InstitutionalEventsResponseDto {
         val sevenDaysFromNow = LocalDate.now().plusDays(7)
 
         return InstitutionalEventsResponseDto(
-            current = eventRepository.findCurrentInstitutionalEvents().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
-            pendingToday = eventRepository.findPendingTodayInstitutionalEvents().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
+            current = eventRepository.findInstitutionalEventsInProgressToday().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
+            pendingToday = eventRepository.findTodayNotStartedInstitutionalEvents().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
             finished = eventRepository.findFinishedTodayInstitutionalEvents().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
-            upcoming = eventRepository.findUpcomingInstitutionalEvents(sevenDaysFromNow).map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime }
+            upcoming = eventRepository.findInstitutionalEventsForNextDays(sevenDaysFromNow).map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime }
         )
     }
 
