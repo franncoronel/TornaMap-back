@@ -90,5 +90,15 @@ class CourseController : UUIDValid() {
         )
     }
 
+    @GetMapping("/by-period/{periodId}")
+    fun getCoursesByPeriod(@PathVariable periodId: String): ResponseEntity<CustomResponse> {
+        validatedUUID(periodId)
+        return ResponseEntity.status(200).body(
+            CustomResponse(
+                message = "Cursos del periodo obtenidos con exito",
+                data = courseService.getByPeriod(periodId).map { CourseMapper.buildCourseAiDto(it) }
+            )
+        )
+    }
 
 }

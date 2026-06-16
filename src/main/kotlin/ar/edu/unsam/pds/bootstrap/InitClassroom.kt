@@ -98,7 +98,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA10 = Classroom(
             code = "TOR-A10",
             name = "Aula A10 - Tornavías",
-            capacity = 50,
+            capacity = 70,
             floor = 0,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -107,7 +107,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA6 = Classroom(
             code = "TOR-A6",
             name = "Aula A6",
-            capacity = 50,
+            capacity = 70,
             floor = 0,
             type=  ClassroomType.CLASSROOM,
             building = tornavias
@@ -116,7 +116,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA6Bis = Classroom(
             code = "TOR-A6BIS",
             name = "Aula A6 BIS",
-            capacity = 50,
+            capacity = 70,
             floor = 0,
             type=  ClassroomType.CLASSROOM,
             building = tornavias
@@ -126,7 +126,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA7 = Classroom(
             code = "TOR-A7",
             name = "Aula A7",
-            capacity = 50,
+            capacity = 70,
             floor = 0,
             type=  ClassroomType.CLASSROOM,
             building = tornavias
@@ -135,7 +135,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA5 = Classroom(
             code = "TOR-A5",
             name = "Aula A5",
-            capacity = 50,
+            capacity = 70,
             floor = 0,
             type=  ClassroomType.CLASSROOM,
             building = tornavias
@@ -144,7 +144,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA1 = Classroom(
             code = "TOR-A1",
             name = "Aula A1",
-            capacity = 50,
+            capacity = 70,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -154,7 +154,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA2 = Classroom(
             code = "TOR-A2",
             name = "Aula A2",
-            capacity = 50,
+            capacity = 70,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -164,7 +164,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA3 = Classroom(
             code = "TOR-A3",
             name = "Aula A3",
-            capacity = 50,
+            capacity = 80,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -174,7 +174,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA4 = Classroom(
             code = "TOR-A4",
             name = "Aula A4",
-            capacity = 50,
+            capacity = 80,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -184,7 +184,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA8 = Classroom(
             code = "TOR-A8",
             name = "Aula A8",
-            capacity = 50,
+            capacity = 80,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -194,7 +194,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA9 = Classroom(
             code = "TOR-A9",
             name = "Aula A9 - Tornavías",
-            capacity = 50,
+            capacity = 80,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -204,7 +204,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA11 = Classroom(
             code = "TOR-A11",
             name = "Aula A11",
-            capacity = 50,
+            capacity = 80,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -214,7 +214,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA12 = Classroom(
             code = "TOR-A12",
             name = "Aula A12",
-            capacity = 50,
+            capacity = 60,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -224,7 +224,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA13 = Classroom(
             code = "TOR-A13",
             name = "Aula A13",
-            capacity = 50,
+            capacity = 60,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -234,7 +234,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA14 = Classroom(
             code = "TOR-A14",
             name = "Aula A14",
-            capacity = 50,
+            capacity = 60,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -244,7 +244,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA15 = Classroom(
             code = "TOR-A15",
             name = "Aula A15 - Tornavías",
-            capacity = 50,
+            capacity = 60,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -254,7 +254,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA16 = Classroom(
             code = "TOR-A16",
             name = "Aula A16 - Tornavías",
-            capacity = 50,
+            capacity = 60,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -264,7 +264,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA17 = Classroom(
             code = "TOR-A17",
             name = "Aula A17 - Tornavías",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -274,7 +274,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA18 = Classroom(
             code = "TOR-A18",
             name = "Aula A18",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -284,7 +284,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA19 = Classroom(
             code = "TOR-A19",
             name = "Aula A19 - Tornavías",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -294,7 +294,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA20 = Classroom(
             code = "TOR-A20",
             name = "Aula A20",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -304,7 +304,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA21 = Classroom(
             code = "TOR-A21",
             name = "Aula A21",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -314,7 +314,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA22 = Classroom(
             code = "TOR-A22",
             name = "Aula A22",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -324,7 +324,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA23 = Classroom(
             code = "TOR-A23",
             name = "Aula A23",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -334,7 +334,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA24 = Classroom(
             code = "TOR-A24",
             name = "Aula A24",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -344,7 +344,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboQuimica = Classroom(
             code = "TOR-LQ",
             name = "Laboratorio de Quimica",
-            capacity = 50,
+            capacity = 65,
             floor = 0,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -455,7 +455,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val cidi = Classroom(
             code = "TOR-CIDI",
             name = "Centro de investigacion y desarrollo de informatica",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -464,7 +464,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA30= Classroom(
             code = "TOR-A30",
             name = "Aula A30",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -474,7 +474,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA31= Classroom(
             code = "TOR-A31",
             name = "Aula A31",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -484,7 +484,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA32= Classroom(
             code = "TOR-A32",
             name = "Aula 32",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -494,7 +494,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA33= Classroom(
             code = "TOR-A33",
             name = "Aula A33",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -504,7 +504,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA35= Classroom(
             code = "TOR-A35",
             name = "Aula A35",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -514,7 +514,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboComputacion1 = Classroom(
             code = "TOR-LC1",
             name = "Laboratorio de Computación 1",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -524,7 +524,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboComputacion2= Classroom(
             code = "TOR-LC2",
             name = "Laboratorio de Computacion 2",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -534,7 +534,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboComputacion3 = Classroom(
             code = "TOR-LC3",
             name = "Laboratorio de Computación 3",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -544,7 +544,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboImagenes = Classroom(
             code = "TOR-LI",
             name = "Laboratorio de Imágenes",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -554,7 +554,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboOptica = Classroom(
             code = "TOR-LO",
             name = "Laboratorio de Óptica",
-            capacity = 50,
+            capacity = 80,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -564,7 +564,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboBiomedica = Classroom(
             code = "TOR-LBM",
             name = "Laboratorio de Biomédica",
-            capacity = 50,
+            capacity = 75,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -574,7 +574,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboElectronica1 = Classroom(
             code = "TOR-LE1",
             name = "Laboratorio de Electrónica 1",
-            capacity = 50,
+            capacity = 75,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -584,7 +584,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboElectronica3 = Classroom(
             code = "TOR-LE3",
             name = "Laboratorio de Electrónica 3",
-            capacity = 50,
+            capacity = 75,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -594,7 +594,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboElectronica4 = Classroom(
             code = "TOR-LE4",
             name = "Laboratorio de Electrónica 4",
-            capacity = 50,
+            capacity = 75,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -604,7 +604,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val laboCienciasHumanas = Classroom(
             code = "TOR-LCH",
             name = "Laboratorio de Ciencias Humanas",
-            capacity = 50,
+            capacity = 75,
             floor = 1,
             type = ClassroomType.LABORATORY,
             building = tornavias
@@ -614,7 +614,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val t03 = Classroom(
             code = "TOR-T03",
             name = "Taller 03",
-            capacity = 50,
+            capacity = 75,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = tornavias
@@ -674,7 +674,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA17Nave3= Classroom(
             code = "AN3-A17",
             name = "Aula A17 - Aulario Nave 3",
-            capacity = 50,
+            capacity = 100,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = aularioN3
@@ -684,7 +684,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA16Nave3= Classroom(
             code = "AN3-A16",
             name = "Aula A16 - Aulario Nave 3",
-            capacity = 50,
+            capacity = 100,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = aularioN3
@@ -694,7 +694,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA15Nave3= Classroom(
             code = "AN3-A15",
             name = "Aula A15 - Aulario Nave 3",
-            capacity = 50,
+            capacity = 100,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = aularioN3
@@ -705,7 +705,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA19Nave3= Classroom(
             code = "AN3-A19",
             name = "Aula A19 - Aulario Nave 3",
-            capacity = 50,
+            capacity = 100,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = aularioN3
@@ -715,7 +715,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA18Nave3= Classroom(
             code = "AN3-A18",
             name = "Aula A18",
-            capacity = 50,
+            capacity = 100,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = aularioN3
@@ -725,7 +725,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA20Nave3= Classroom(
             code = "AN3-A20",
             name = "Aula A20",
-            capacity = 50,
+            capacity = 100,
             floor = 1,
             type = ClassroomType.CLASSROOM,
             building = aularioN3
@@ -737,7 +737,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA1ITS= Classroom(
             code = "ITS-A1",
             name = "Aula A1 - ITS",
-            capacity = 50,
+            capacity = 100,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = its
@@ -747,7 +747,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA2ITS= Classroom(
             code = "ITS-A2",
             name = "Aula A2 - ITS",
-            capacity = 50,
+            capacity = 100,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = its
@@ -757,7 +757,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA3ITS= Classroom(
             code = "ITS-A3",
             name = "Aula A3 - ITS",
-            capacity = 50,
+            capacity = 100,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = its
@@ -767,7 +767,7 @@ class InitClassroom : BootstrapGeneric("Classroom") {
         val aulaA4ITS= Classroom(
             code = "ITS-A4",
             name = "Aula A4 - ITS",
-            capacity = 50,
+            capacity = 100,
             floor = 0,
             type = ClassroomType.CLASSROOM,
             building = its
