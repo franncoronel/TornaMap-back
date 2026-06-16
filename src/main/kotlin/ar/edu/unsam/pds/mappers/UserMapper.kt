@@ -13,7 +13,7 @@ object UserMapper {
             email = user.email,
             image = user.image,
             id = user.id.toString(),
-            isAdmin = user.isAdmin
+            role = user.role
         )
     }
 
@@ -24,7 +24,7 @@ object UserMapper {
             email = user.email,
             image = user.image,
             id = user.id.toString(),
-            isAdmin = user.isAdmin
+            role = user.role
         )
     }
 

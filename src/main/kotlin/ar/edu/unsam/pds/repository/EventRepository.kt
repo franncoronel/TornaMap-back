@@ -1,6 +1,7 @@
 package ar.edu.unsam.pds.repository
 
 import ar.edu.unsam.pds.models.Event
+import ar.edu.unsam.pds.models.enums.EventType
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -75,4 +76,71 @@ interface EventRepository : JpaRepository<Event, UUID> {
     @Query("SELECT e FROM Event e WHERE e.period.id = :periodId AND e.course IS NOT NULL")
     fun findByPeriodIdWithCourse(@Param("periodId") periodId: UUID): List<Event>
 
+    // Eventos institucionales (sin curso asociado)
+
+    @EntityGraph(attributePaths = ["schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("SELECT e FROM Event e WHERE e.course IS NULL AND e.type IN :types")
+    fun findStandaloneByTypes(@Param("types") types: List<EventType>): List<Event>
+
+    // Búsqueda de eventos institucionales por nombre
+
+    @EntityGraph(attributePaths = ["schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT e FROM Event e
+        WHERE e.course IS NULL
+          AND e.type IN :types
+          AND LOWER(e.name) LIKE LOWER(CONCAT('%', :query, '%'))
+    """)
+    fun searchStandaloneByName(
+        @Param("types") types: List<EventType>,
+        @Param("query") query: String
+    ): List<Event>
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date = CURRENT_DATE
+          AND s.startTime <= CURRENT_TIME
+          AND s.endTime >= CURRENT_TIME
+    """)
+    fun findInstitutionalEventsInProgressToday(): List<Event>   //Eventos  de hoy que ya empezaron y todavía no terminaron
+
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date = CURRENT_DATE
+          AND s.startTime > CURRENT_TIME
+    """)
+    fun findTodayNotStartedInstitutionalEvents(): List<Event>  //Eventos sin iniciar
+
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date = CURRENT_DATE
+          AND s.endTime < CURRENT_TIME
+    """)
+    fun findFinishedTodayInstitutionalEvents(): List<Event> //Eventos que ya terminaron
+
+    @EntityGraph(attributePaths = ["course", "course.programs", "schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
+    @Query("""
+        SELECT DISTINCT e
+        FROM Event e
+        JOIN e.schedules s
+        WHERE e.isApproved = true
+          AND e.type IN ('CHARLA', 'SEMINARIO', 'CONFERENCIA')
+          AND s.date > CURRENT_DATE
+          AND s.date <= :endDate
+    """)
+    fun findInstitutionalEventsForNextDays(@Param("endDate") endDate: LocalDate): List<Event>  //Eventos que ocurren durante la semana
 }

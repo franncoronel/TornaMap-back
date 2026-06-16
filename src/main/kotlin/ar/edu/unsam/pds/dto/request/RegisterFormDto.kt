@@ -1,5 +1,6 @@
 package ar.edu.unsam.pds.dto.request
 
+import ar.edu.unsam.pds.models.Role
 import jakarta.validation.constraints.*
 
 data class RegisterFormDto(
@@ -23,6 +24,5 @@ data class RegisterFormDto(
     @field: Size(max = 250, message = "El campo contraseña debe tener como máximo 250 caracteres")
     val password: String = "",
 
-    @field: NotNull(message = "El campo isAdmin no puede ser nulo")
-    val isAdmin: Boolean = false,
+    val role: Role? = null,
 )

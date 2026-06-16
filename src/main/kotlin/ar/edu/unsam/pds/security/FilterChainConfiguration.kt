@@ -57,6 +57,7 @@ class FilterChainConfiguration {
                 antMatcher(POST, "/api/events/*/reject"),
                 antMatcher(GET, "/api/events/pending"),
                 antMatcher(GET, "/api/classroom"),
+                antMatcher(GET, "/api/events/institutional"),
             ).permitAll()
             //TODO: volver a cambiar a has role admin despues de probar
 
