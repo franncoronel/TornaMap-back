@@ -404,6 +404,98 @@ class InitEvents : BootstrapGeneric("Events") {
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(parcialPHM)
 
+        /*...........:Eventos Institucionales:............*/
+        /*...........:En Curso:............*/
+        val charlaIA = Event(
+            name = "Introducción a la IA Generativa",
+            isApproved = true,
+            type = EventType.CHARLA,
+            details = "Charla abierta para estudiantes"
+        )
+
+        val seminarioReact = Event(
+            name = "React Avanzado",
+            isApproved = true,
+            type = EventType.SEMINARIO,
+            details = "Componentes y hooks"
+        )
+        eventRepository.save(charlaIA)
+        eventRepository.save(seminarioReact)
+        /*..............:Sin Iniciar:.............*/
+        val conferenciaCloud = Event(
+            name = "Cloud Computing",
+            isApproved = true,
+            type = EventType.CONFERENCIA,
+            details = "Infraestructura moderna"
+        )
+
+        val charlaKubernetes = Event(
+            name = "Kubernetes Básico",
+            isApproved = true,
+            type = EventType.CHARLA,
+            details = "Orquestación de contenedores"
+        )
+        eventRepository.save(conferenciaCloud)
+        eventRepository.save(charlaKubernetes)
+        /*..............:Finalizados:.............*/
+        val seminarioDocker = Event(
+            name = "Docker para Principiantes",
+            isApproved = true,
+            type = EventType.SEMINARIO,
+            details = "Seminario práctico"
+        )
+
+        val charlaGit = Event(
+            name = "Git y GitHub",
+            isApproved = true,
+            type = EventType.CHARLA,
+            details = "Control de versiones"
+        )
+        eventRepository.save(seminarioDocker)
+        eventRepository.save(charlaGit)
+
+        /*..............:Proximamente:.............*/
+        val conferenciaIndustria = Event(
+            name = "Transformación Digital",
+            isApproved = true,
+            type = EventType.CONFERENCIA,
+            details = "Conferencia institucional"
+        )
+
+        val charlaCiberseguridad = Event(
+            name = "Ciberseguridad Actual",
+            isApproved = true,
+            type = EventType.CHARLA,
+            details = "Amenazas y prevención"
+        )
+
+        val seminarioIA = Event(
+            name = "IA Aplicada",
+            isApproved = true,
+            type = EventType.SEMINARIO,
+            details = "Casos de uso reales"
+        )
+
+        val conferenciaDatos = Event(
+            name = "Data Science Summit",
+            isApproved = true,
+            type = EventType.CONFERENCIA,
+            details = "Análisis de datos"
+        )
+
+        /*Evento sin aprobar*/
+        val charlaQuimicaGeneral = Event(
+            name = "Introducción a la Tabla Periódica y Tendencias",
+            isApproved = null,
+            type = EventType.CHARLA,
+            details = "Análisis de la configuración electrónica, electronegatividad y radio atómico"
+        )
+
+        eventRepository.save(conferenciaIndustria)
+        eventRepository.save(charlaCiberseguridad)
+        eventRepository.save(seminarioIA)
+        eventRepository.save(conferenciaDatos)
+        eventRepository.save(charlaQuimicaGeneral)
       }
 
     fun findCourseByName(name: String): Course? {
