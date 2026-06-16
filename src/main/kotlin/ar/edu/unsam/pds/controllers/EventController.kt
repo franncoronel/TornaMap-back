@@ -4,6 +4,7 @@ import ar.edu.unsam.pds.dto.request.EventRequestDto
 import ar.edu.unsam.pds.dto.response.CustomResponse
 import ar.edu.unsam.pds.mappers.EventMapper
 import ar.edu.unsam.pds.mappers.ScheduleMapper
+import ar.edu.unsam.pds.models.enums.EventType
 import ar.edu.unsam.pds.repository.ClassroomRepository
 import ar.edu.unsam.pds.services.CourseService
 import ar.edu.unsam.pds.services.EventService
@@ -25,6 +26,40 @@ class EventController : UUIDValid() {
     lateinit var eventService: EventService
     @Autowired
     lateinit var courseService: CourseService
+
+    // ──────────────────────────────────────────────────────────────
+    // IMPORTANTE: los endpoints con path fijo van ANTES que /{id}
+    // para que Spring no intente parsear "institutional" como UUID
+    // ──────────────────────────────────────────────────────────────
+
+    @GetMapping("/institutional")
+    @Operation(summary = "Get all standalone institutional events (CHARLA, SEMINARIO, CONFERENCIA)")
+    fun getInstitutionalEvents(
+        @RequestParam(value = "query", required = false) query: String?
+    ): ResponseEntity<CustomResponse> {
+        val events = if (!query.isNullOrBlank()) {
+            eventService.searchStandaloneEvents(query)
+        } else {
+            eventService.getStandaloneEvents()
+        }
+        return ResponseEntity.ok(
+            CustomResponse(
+                message = "Eventos institucionales obtenidos con éxito",
+                data = events.map { EventMapper.buildEventDto(it) }
+            )
+        )
+    }
+
+    @GetMapping("/pending")
+    @Operation(summary = "Get all pending event requests")
+    fun getPendingRequests(): ResponseEntity<CustomResponse> {
+        return ResponseEntity.status(200).body(
+            CustomResponse(
+                message = "Solicitudes pendientes obtenidas con éxito",
+                data = eventService.getPendingRequests().map { EventMapper.buildEventDto(it) }
+            )
+        )
+    }
 
     @GetMapping("/{classroomID}/{date}")
     @Operation(summary = "Get all events in a given classroom")
@@ -71,8 +106,7 @@ class EventController : UUIDValid() {
 
     @GetMapping
     @Operation(summary = "Get all events")
-    fun getAllEvents(
-    ): ResponseEntity<CustomResponse> {
+    fun getAllEvents(): ResponseEntity<CustomResponse> {
         val events = eventService.getAll()
         return ResponseEntity.status(200).body(
             CustomResponse(
@@ -82,12 +116,15 @@ class EventController : UUIDValid() {
         )
     }
 
-
     @PostMapping
     @Operation(summary = "Create an event")
     fun createEvent(
         @RequestBody @Valid eventDTO: EventRequestDto
     ): ResponseEntity<CustomResponse> {
+
+        // Validar coherencia tipo ↔ curso
+        val eventType = EventType.valueOf(eventDTO.type)
+        eventService.validateEventTypeCourseCoherence(eventType, eventDTO.courseID)
 
         val course = if (!eventDTO.courseID.isNullOrBlank()) courseService.findByID(eventDTO.courseID) else null
         val event = EventMapper.buildEvent(eventDTO, course)
@@ -139,23 +176,12 @@ class EventController : UUIDValid() {
     ): ResponseEntity<CustomResponse> {
         requireNotNull(eventDTO.id) { "El ID del evento no debe ser nulo" }
 
-        val updatedEvent = eventService.update(eventDTO)       // ← pasamos sólo el DTO
+        val updatedEvent = eventService.update(eventDTO)
 
         return ResponseEntity.status(200).body(
             CustomResponse(
                 message = "Event editado con éxito",
                 data = EventMapper.buildEventDto(updatedEvent)
-            )
-        )
-    }
-
-    @GetMapping("/pending")
-    @Operation(summary = "Get all pending event requests")
-    fun getPendingRequests(): ResponseEntity<CustomResponse> {
-        return ResponseEntity.status(200).body(
-            CustomResponse(
-                message = "Solicitudes pendientes obtenidas con éxito",
-                data = eventService.getPendingRequests().map { EventMapper.buildEventDto(it) }
             )
         )
     }
