@@ -3,8 +3,10 @@ package ar.edu.unsam.pds.services
 import ar.edu.unsam.pds.dto.request.EventRequestDto
 import ar.edu.unsam.pds.dto.response.EventDetailResponseDto
 import ar.edu.unsam.pds.dto.response.EventResponseDto
+import ar.edu.unsam.pds.dto.response.InstitutionalEventsResponseDto
 import ar.edu.unsam.pds.exceptions.NotFoundException
 import ar.edu.unsam.pds.mappers.EventMapper
+import ar.edu.unsam.pds.mappers.InstitutionalEventMapper
 import ar.edu.unsam.pds.mappers.ScheduleMapper
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
@@ -154,6 +156,17 @@ class EventService(
         val event = findByID(id)
         event.isApproved = false
         return eventRepository.save(event)
+    }
+
+    fun getInstitutionalEventsDashboard(): InstitutionalEventsResponseDto {
+        val sevenDaysFromNow = LocalDate.now().plusDays(7)
+
+        return InstitutionalEventsResponseDto(
+            current = eventRepository.findInstitutionalEventsInProgressToday().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
+            pendingToday = eventRepository.findTodayNotStartedInstitutionalEvents().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
+            finished = eventRepository.findFinishedTodayInstitutionalEvents().map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime },
+            upcoming = eventRepository.findInstitutionalEventsForNextDays(sevenDaysFromNow).map { InstitutionalEventMapper.buildDto(it) }.sortedBy { it.startTime }
+        )
     }
 
 }
