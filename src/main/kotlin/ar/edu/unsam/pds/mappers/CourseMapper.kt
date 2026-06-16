@@ -48,4 +48,12 @@ object CourseMapper {
             id = course.id?.let { java.util.UUID.fromString(it) } ?: java.util.UUID.randomUUID()
         }
     }
+
+    fun buildCourseAiDto(course: Course): CourseAiDto {
+        return CourseAiDto(
+            id = course.id.toString(),
+            name = course.name,
+            students = course.students
+        )
+    }
 }

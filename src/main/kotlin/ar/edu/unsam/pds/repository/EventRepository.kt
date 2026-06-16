@@ -72,6 +72,10 @@ interface EventRepository : JpaRepository<Event, UUID> {
     @EntityGraph(attributePaths = ["schedules", "course", "course.programs", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
     fun findByIsApprovedIsNull(): List<Event>
 
+    @EntityGraph(attributePaths = ["course"])
+    @Query("SELECT e FROM Event e WHERE e.period.id = :periodId AND e.course IS NOT NULL")
+    fun findByPeriodIdWithCourse(@Param("periodId") periodId: UUID): List<Event>
+
     // Eventos institucionales (sin curso asociado)
 
     @EntityGraph(attributePaths = ["schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])

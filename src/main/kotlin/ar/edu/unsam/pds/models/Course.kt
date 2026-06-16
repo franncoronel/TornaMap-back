@@ -11,6 +11,8 @@ class Course(
     @Column(length = 1024)
     var description: String,
 
+    var students: Int = 0
+
     ) : Timestamp(), Serializable {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     lateinit var id: UUID

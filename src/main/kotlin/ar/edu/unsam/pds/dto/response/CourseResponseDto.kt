@@ -16,3 +16,9 @@ data class CourseListResponseDto(
     val modality: String,
     val schedules: String
 )
+
+data class CourseAiDto(
+    val id: String,
+    val name: String,
+    val students: Int
+)
