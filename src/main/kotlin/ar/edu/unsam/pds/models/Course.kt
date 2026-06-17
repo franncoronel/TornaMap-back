@@ -32,7 +32,7 @@ class Course(
         return programs.map { it.name }
     }
 
-    fun events(): String = this.events.joinToString(", ") { it.name }
+    fun events(): String = this.events.filter { it.isApproved == true }.joinToString(", ") { it.name }
 
     fun professors(): String = this.events.flatMap { it.getProfessorNames() }.toSet().joinToString(" - ")
 
