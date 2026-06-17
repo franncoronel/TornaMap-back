@@ -145,8 +145,10 @@ class UserService(
     fun getMyCourses(request: HttpServletRequest): List<StudentCourseDto> {
         val auth = request.userPrincipal as Authentication
         val principalUser = (auth.principal as Principal).getUser()
-
-        return principalUser.courses.map { ProfileMapper.buildStudentCourseDto(it) }
+        val managedUser = userRepository.findById(principalUser.id).orElseThrow {
+            NotFoundException("Usuario no encontrado")
+        }
+        return managedUser.courses.map { ProfileMapper.buildStudentCourseDto(it) }
     }
 
     @Transactional
@@ -155,16 +157,12 @@ class UserService(
         val principalUser = (auth.principal as Principal).getUser()
 
         val courseIdUUID = UUID.fromString(courseId)
-        val course = courseRepository.findById(courseIdUUID).orElseThrow {
-            NotFoundException("Materia no encontrada")
-        }
 
-        if (principalUser.courses.any { it.id == courseIdUUID }) {
+        if (userRepository.countUserCourse(principalUser.id, courseIdUUID) > 0) {
             throw InternalServerError("Ya estás suscripto a esta materia")
         }
 
-        principalUser.courses.add(course)
-        userRepository.save(principalUser)
+        userRepository.addCourseToUser(principalUser.id, courseIdUUID)
     }
 
 
@@ -173,11 +171,9 @@ class UserService(
         val auth = request.userPrincipal as Authentication
         val principalUser = (auth.principal as Principal).getUser()
 
-        val courseToRemove = principalUser.courses.find { it.id.toString() == courseId }
-            ?: throw NotFoundException("No estás suscripto a este curso")
+        val courseIdUUID = UUID.fromString(courseId)
 
-        principalUser.courses.remove(courseToRemove)
-        userRepository.save(principalUser)
+        userRepository.removeCourseFromUser(principalUser.id, courseIdUUID)
     }
 
     //--- Para Profile de PROFESSOR---
