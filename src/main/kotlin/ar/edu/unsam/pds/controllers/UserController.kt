@@ -134,6 +134,19 @@ class UserController : UUIDValid() {
         )
     }
 
+    @PostMapping("me/courses/{courseId}")
+    @Operation(summary = "Subscribe to a course")
+    fun subscribeToCourse(
+        @PathVariable courseId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        this.validatedUUID(courseId)
+        userService.subscribeToCourse(request, courseId)
+        return ResponseEntity.status(201).body(
+            CustomResponse(message = "Suscripción a materia exitosa", data = null)
+        )
+    }
+
     @DeleteMapping("me/courses/{courseId}")
     @Operation(summary = "Unsubscribe from a course")
     fun unsubscribeFromCourse(
