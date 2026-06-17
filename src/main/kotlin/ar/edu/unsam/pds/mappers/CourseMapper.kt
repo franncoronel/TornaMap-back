@@ -28,7 +28,7 @@ object CourseMapper {
     }
 
     fun buildCourseDetailDto(course: Course): CourseDetailResponseDto {
-        val events = if(course.events.isEmpty()) mutableSetOf() else course.events.map { EventMapper.buildEventDto(it) }.toMutableSet()
+        val events = if(course.events.isEmpty()) mutableSetOf() else course.events.filter{it.isApproved == true}.map { EventMapper.buildEventDto(it) }.toMutableSet()
 
         return CourseDetailResponseDto(
             id = course.id.toString(),
