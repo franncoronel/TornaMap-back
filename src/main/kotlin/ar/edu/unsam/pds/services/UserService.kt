@@ -141,6 +141,7 @@ class UserService(
     }
 
     //--- Para Profile de STUDENT---
+    @Transactional
     fun getMyCourses(request: HttpServletRequest): List<StudentCourseDto> {
         val auth = request.userPrincipal as Authentication
         val principalUser = (auth.principal as Principal).getUser()
@@ -166,25 +167,6 @@ class UserService(
         userRepository.save(principalUser)
     }
 
-
-//    @Transactional
-//    fun subscribeToEvent(request: HttpServletRequest, eventId: String) {
-//        val auth = request.userPrincipal as Authentication
-//        val principalUser = (auth.principal as Principal).getUser()
-//
-//        val eventIdUUID = UUID.fromString(eventId)
-//        val event = eventRepository.findById(eventIdUUID).orElseThrow {
-//            NotFoundException("Evento no encontrado")
-//        }
-//
-//        // Asumiendo que tenés una lista "events" en tu entidad User
-//        if (principalUser.events.any { it.id == eventIdUUID }) {
-//            throw InternalServerError("Ya estás suscripto a este evento")
-//        }
-//
-//        principalUser.events.add(event)
-//        userRepository.save(principalUser)
-//    }
 
     @Transactional
     fun unsubscribeFromCourse(request: HttpServletRequest, courseId: String) {
