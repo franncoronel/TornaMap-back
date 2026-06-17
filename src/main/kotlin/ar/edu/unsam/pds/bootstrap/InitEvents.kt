@@ -372,21 +372,24 @@ class InitEvents : BootstrapGeneric("Events") {
         val parcialMate1 = Event(
             name = "Parcial Matemática I",
             isApproved = null,
-            course = mate1
+            course = mate1,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(parcialMate1)
 
         val parcialAlgo2 = Event(
             name = "Parcial Algoritmos II",
             isApproved = null,
-            course = algo2
+            course = algo2,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(parcialAlgo2)
 
         val recuperatorioRedes = Event(
             name = "Recuperatorio Telecomunicaciones y Redes",
             isApproved = null,
-            course = telecomuncacionesYRedes
+            course = telecomuncacionesYRedes,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(recuperatorioRedes)
 
@@ -400,7 +403,8 @@ class InitEvents : BootstrapGeneric("Events") {
         val parcialPHM = Event(
             name = "Parcial PHM",
             isApproved = null,
-            course = progHerrModer
+            course = progHerrModer,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(parcialPHM)
 
