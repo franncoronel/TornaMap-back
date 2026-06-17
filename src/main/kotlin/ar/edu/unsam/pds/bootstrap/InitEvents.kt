@@ -373,7 +373,7 @@ class InitEvents : BootstrapGeneric("Events") {
             name = "Parcial Matemática I",
             isApproved = null,
             course = mate1,
-            type = EventType.PARCIAL,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(parcialMate1)
 
@@ -381,7 +381,7 @@ class InitEvents : BootstrapGeneric("Events") {
             name = "Parcial Algoritmos II",
             isApproved = null,
             course = algo2,
-            type = EventType.PARCIAL,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(parcialAlgo2)
 
@@ -389,7 +389,7 @@ class InitEvents : BootstrapGeneric("Events") {
             name = "Recuperatorio Telecomunicaciones y Redes",
             isApproved = null,
             course = telecomuncacionesYRedes,
-            type = EventType.PARCIAL,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(recuperatorioRedes)
 
@@ -404,7 +404,7 @@ class InitEvents : BootstrapGeneric("Events") {
             name = "Parcial PHM",
             isApproved = null,
             course = progHerrModer,
-            type = EventType.PARCIAL,
+            type = EventType.PARCIAL
         ).apply { this.addPeriod(primerCuatrimestre) }
         eventRepository.save(parcialPHM)
 

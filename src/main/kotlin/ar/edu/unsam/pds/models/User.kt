@@ -38,7 +38,7 @@ class User(
     )
     val programs: MutableSet<Program> = mutableSetOf()
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "app_user_course",
         joinColumns = [JoinColumn(name = "user_id")],
