@@ -1,5 +1,6 @@
 package ar.edu.unsam.pds.controllers
 
+import ar.edu.unsam.pds.dto.request.CreateReservationDto
 import ar.edu.unsam.pds.dto.request.LoginForm
 import ar.edu.unsam.pds.dto.request.RegisterFormDto
 import ar.edu.unsam.pds.dto.request.UserRequestUpdateDto
@@ -160,6 +161,21 @@ class UserController : UUIDValid() {
     }
 
     // --- Endpoints de Perfil (PROFESSOR) ---
+    @PostMapping("me/reservations")
+    @Operation(summary = "Create a classroom reservation (pending approval) for logged professor")
+    fun createReservation(
+        @RequestBody @Valid dto: CreateReservationDto,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        userService.createReservation(request, dto)
+        return ResponseEntity.status(201).body(
+            CustomResponse(
+                message = "Reserva creada con éxito, pendiente de aprobación",
+                data = null
+            )
+        )
+    }
+
     @GetMapping("me/reservations")
     @Operation(summary = "Get reservations for logged professor")
     fun getMyReservations(request: HttpServletRequest): ResponseEntity<CustomResponse> {
