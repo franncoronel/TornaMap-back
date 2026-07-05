@@ -28,7 +28,7 @@ object CourseMapper {
     }
 
     fun buildCourseDetailDto(course: Course): CourseDetailResponseDto {
-        val events = if(course.events.isEmpty()) mutableSetOf() else course.events.map { EventMapper.buildEventDto(it) }.toMutableSet()
+        val events = if(course.events.isEmpty()) mutableSetOf() else course.events.filter{it.isApproved == true}.map { EventMapper.buildEventDto(it) }.toMutableSet()
 
         return CourseDetailResponseDto(
             id = course.id.toString(),
@@ -47,5 +47,13 @@ object CourseMapper {
         ).apply {
             id = course.id?.let { java.util.UUID.fromString(it) } ?: java.util.UUID.randomUUID()
         }
+    }
+
+    fun buildCourseAiDto(course: Course): CourseAiDto {
+        return CourseAiDto(
+            id = course.id.toString(),
+            name = course.name,
+            students = course.students
+        )
     }
 }

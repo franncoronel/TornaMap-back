@@ -7,6 +7,7 @@ import java.util.UUID
 
 @Entity @Table(name = "APP_CLASSROOM")
 class Classroom(
+    @Column(unique = true)
     val code: String,
     val name: String,
     val type: ClassroomType,

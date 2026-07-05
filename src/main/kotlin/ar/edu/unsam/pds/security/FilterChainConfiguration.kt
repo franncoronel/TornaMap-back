@@ -53,6 +53,11 @@ class FilterChainConfiguration {
                 antMatcher(DELETE, "/api/events/**"),
                 antMatcher(DELETE, "/api/institutions/**"),
                 antMatcher(GET, "/api/events/*/admin"),
+                antMatcher(POST, "/api/events/*/approve"),
+                antMatcher(POST, "/api/events/*/reject"),
+                antMatcher(GET, "/api/events/pending"),
+                antMatcher(GET, "/api/classroom"),
+                antMatcher(GET, "/api/events/institutional"),
             ).permitAll()
             //TODO: volver a cambiar a has role admin despues de probar
 
@@ -125,6 +130,9 @@ class FilterChainConfiguration {
                 // Buildings
                 antMatcher(GET, "/api/buildings"),
                 antMatcher(GET, "/api/buildings/*"),
+
+                // Classroom
+                antMatcher(GET, "/api/classroom/*"),
             ).permitAll()
 
             // H2 DataBase @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

@@ -20,11 +20,11 @@ class CourseController : UUIDValid() {
 
     @GetMapping("")
     @Operation(summary = "Get all courses")
-    fun getAll(@RequestParam(value = "query", required = false) query: String?): ResponseEntity<CustomResponse> {
+    fun getAll(@RequestParam(value = "query", required = false) query: List<String>?): ResponseEntity<CustomResponse> {
         return ResponseEntity.status(200).body(
             CustomResponse (
                 message = "Cursos obtenidos con exito",
-                data = courseService.searchBy(query ?: "").map { CourseMapper.buildCourseListDto(it) }
+                data = courseService.searchBy(query ?: emptyList()).map { CourseMapper.buildCourseListDto(it) }
             )
         )
     }
@@ -90,5 +90,15 @@ class CourseController : UUIDValid() {
         )
     }
 
+    @GetMapping("/by-period/{periodId}")
+    fun getCoursesByPeriod(@PathVariable periodId: String): ResponseEntity<CustomResponse> {
+        validatedUUID(periodId)
+        return ResponseEntity.status(200).body(
+            CustomResponse(
+                message = "Cursos del periodo obtenidos con exito",
+                data = courseService.getByPeriod(periodId).map { CourseMapper.buildCourseAiDto(it) }
+            )
+        )
+    }
 
 }

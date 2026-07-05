@@ -3,7 +3,7 @@ package ar.edu.unsam.pds.bootstrap
 import ar.edu.unsam.pds.exceptions.NotFoundException
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
-import ar.edu.unsam.pds.models.*
+import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.repository.ClassroomRepository
 import ar.edu.unsam.pds.repository.EventRepository
 import ar.edu.unsam.pds.repository.ScheduleRepository
@@ -13,6 +13,7 @@ import org.springframework.context.annotation.DependsOn
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalTime
 
 @Component(value = "InitSchedules.beanName")
@@ -60,6 +61,20 @@ class InitSchedules : BootstrapGeneric("Schedules") {
         val gastonAguilera=userByEmail("gAguilera@estudiantes.unsam.edu.ar")
         val monica=userByEmail("mHencek@estudiantes.unsam.edu.ar")
         val juanJoseLopez=userByEmail("jJLopez@estudiantes.unsam.edu.ar")
+
+        /*Horarios para Eventos*/
+        val charlaIA = findEvent("Introducción a la IA Generativa")
+        val seminarioDocker = findEvent("Docker para Principiantes")
+        val seminarioReact = findEvent("React Avanzado")
+        val conferenciaCloud = findEvent("Cloud Computing")
+        val charlaKubernetes = findEvent("Kubernetes Básico")
+        val charlaGit = findEvent("Git y GitHub")
+        val conferenciaIndustria = findEvent("Transformación Digital")
+        val charlaCiberseguridad = findEvent("Ciberseguridad Actual")
+        val seminarioIA = findEvent("IA Aplicada")
+        val conferenciaDatos = findEvent("Data Science Summit")
+        val charlaQuimicaGeneral = findEvent("Introducción a la Tabla Periódica y Tendencias")
+
 //        val event1 = findEvent("Cursada Algoritmos I")
        /*
         val event3 = findEvent("Final Matematica I")*/
@@ -546,7 +561,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaLabo2
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A2 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(dodino, this) // TODO: No Asignar a mónica
         }
         scheduleRepository.save(scheduleLabo2LunesB)
@@ -559,7 +574,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaLabo2
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A3 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(monica, this)
         }
         scheduleRepository.save(scheduleLabo2JuevesA)
@@ -585,7 +600,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaSPD
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A1 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(fabioSergioBruschetti, this)
 
             // TODO: si le pongo a los dos prof en el mismo día me duplica la card
@@ -601,7 +616,7 @@ class InitSchedules : BootstrapGeneric("Schedules") {
             isVirtual = false,
         ).apply {
             event = cursadaSPD
-            classroom = classroomRepository.findByName("Lab LCD").orElseThrow { NotFoundException("No se halló el aula") }
+            classroom = classroomRepository.findByName("Aula A4 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
             assignUserToSchedule(pedroFIriso, this)
 //            assignUserToSchedule(fabioSergioBruschetti, this)
         }
@@ -689,6 +704,142 @@ class InitSchedules : BootstrapGeneric("Schedules") {
         }
         scheduleRepository.save(scheduleRedesInfo3Martes)
 
+        /*Horarios para los eventos Institucionales*/
+        //En curso
+        val scheduleCharlaIA = Schedule(
+                startTime = LocalTime.of(18, 0),
+                endTime = LocalTime.of(23, 0),
+                weekDay = null,
+                date = LocalDate.now(),
+                isVirtual = false
+        ).apply {
+            event = charlaIA
+            classroom = classroomRepository.findByName("Centro de investigacion y desarrollo de informatica").orElseThrow { NotFoundException("No se halló el aula") }
+        }
+        scheduleRepository.save(scheduleCharlaIA)
+
+        val scheduleSeminarioReact = Schedule(
+                startTime = LocalTime.of(20, 0),
+                endTime = LocalTime.of(23, 30),
+                weekDay = null,
+                date = LocalDate.now(),
+                isVirtual = false
+        ).apply {
+            event = seminarioReact
+            classroom = classroomRepository.findByName("Aula A28").orElseThrow { NotFoundException("No se halló el aula") }
+        }
+        scheduleRepository.save(scheduleSeminarioReact)
+
+        //Sin Iniciar
+        val scheduleConferenciaCloud = Schedule(
+                startTime = LocalTime.of(23, 45),
+                endTime = LocalTime.of(23, 59),
+                weekDay = null,
+                date = LocalDate.now(),
+                isVirtual = true
+        ).apply {
+            event = conferenciaCloud
+        }
+        scheduleRepository.save(scheduleConferenciaCloud)
+
+        val scheduleCharlaKubernetes = Schedule(
+                startTime = LocalTime.of(23, 50),
+                endTime = LocalTime.of(23, 59),
+                weekDay = null,
+                date = LocalDate.now(),
+                isVirtual = false
+        ).apply {
+                event = charlaKubernetes
+                classroom = classroomRepository .findByName("Centro de investigacion y desarrollo de informatica").orElseThrow { NotFoundException("No se halló el aula") }
+        }
+        scheduleRepository.save(scheduleCharlaKubernetes)
+
+        //Finalizados
+        val scheduleSeminarioDocker = Schedule(
+                startTime = LocalTime.of(8, 0),
+                endTime = LocalTime.of(10, 0),
+                weekDay = null,
+                date = LocalDate.now(),
+                isVirtual = false
+        ).apply {
+            event = seminarioDocker
+            classroom = classroomRepository.findByName("Aula A4 - ITS").orElseThrow { NotFoundException("No se halló el aula") }
+        }
+        scheduleRepository.save(scheduleSeminarioDocker)
+
+
+        val scheduleCharlaGit = Schedule(
+                startTime = LocalTime.of(12, 0),
+                endTime = LocalTime.of(13, 30),
+                weekDay = null,
+                date = LocalDate.now(),
+                isVirtual = true
+            ).
+        apply {
+            event = charlaGit
+        }
+        scheduleRepository.save(scheduleCharlaGit)
+
+        val scheduleConferenciaIndustria = Schedule(
+                startTime = LocalTime.of(18, 0),
+                endTime = LocalTime.of(21, 0),
+                weekDay = null,
+                date = LocalDate.now().plusDays(1),
+                isVirtual = true
+            ).
+        apply {
+            event = conferenciaIndustria
+        }
+        scheduleRepository.save(scheduleConferenciaIndustria)
+
+        val scheduleCharlaCiberseguridad = Schedule(
+                startTime = LocalTime.of(10, 0),
+                endTime = LocalTime.of(12, 0),
+                weekDay = null,
+                date = LocalDate.now().plusDays(2),
+                isVirtual = false
+        ).apply {
+            event = charlaCiberseguridad
+            classroom = classroomRepository.findByName("Aula A28").orElseThrow { NotFoundException("No se halló el aula") }
+        }
+        scheduleRepository.save(scheduleCharlaCiberseguridad)
+
+        val scheduleSeminarioIA = Schedule(
+                startTime = LocalTime.of(16, 0),
+                endTime = LocalTime.of(18, 0),
+                weekDay = null,
+                date = LocalDate.now().plusDays(3),
+                isVirtual = false
+        ).apply {
+            event = seminarioIA
+            classroom = classroomRepository .findByName("Laboratorio de Computación 1").orElseThrow { NotFoundException("No se halló el aula") }
+        }
+        scheduleRepository.save(scheduleSeminarioIA)
+
+        val scheduleConferenciaDatos = Schedule(
+                startTime = LocalTime.of(19, 0),
+                endTime = LocalTime.of(22, 0),
+                weekDay = null,
+                date = LocalDate.now().plusDays(4),
+                isVirtual = true
+            ).
+        apply {
+            event = conferenciaDatos
+        }
+        scheduleRepository.save(scheduleConferenciaDatos)
+
+        //En curso
+        val scheduleCharlaQuimicaGeneral= Schedule(
+            startTime = LocalTime.of(18, 0),
+            endTime = LocalTime.of(23, 0),
+            weekDay = null,
+            date = LocalDate.now(),
+            isVirtual = false
+        ).apply {
+            event = charlaQuimicaGeneral
+            classroom = classroomRepository.findByName("Centro de investigacion y desarrollo de informatica").orElseThrow { NotFoundException("No se halló el aula") }
+        }
+        scheduleRepository.save(scheduleCharlaQuimicaGeneral)
     }
 
     fun findEvent(name: String): Event {

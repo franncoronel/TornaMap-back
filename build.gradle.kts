@@ -38,7 +38,7 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2")
     implementation("org.springdoc:springdoc-openapi-starter-common:2.2.0")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
-    implementation("org.springframework.boot:spring-boot-devtools")
+    //implementation("org.springframework.boot:spring-boot-devtools")
 
     // testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -48,7 +48,7 @@ dependencies {
 
     // persistencia
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("com.h2database:h2")
+    implementation("com.h2database:h2")
     runtimeOnly("org.postgresql:postgresql")
 
     // security

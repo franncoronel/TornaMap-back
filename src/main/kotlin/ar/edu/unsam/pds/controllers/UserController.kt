@@ -1,5 +1,6 @@
 package ar.edu.unsam.pds.controllers
 
+import ar.edu.unsam.pds.dto.request.CreateReservationDto
 import ar.edu.unsam.pds.dto.request.LoginForm
 import ar.edu.unsam.pds.dto.request.RegisterFormDto
 import ar.edu.unsam.pds.dto.request.UserRequestUpdateDto
@@ -119,6 +120,121 @@ class UserController : UUIDValid() {
                 message = "Usuario eliminado con exito",
                 data = userService.deleteAccount(request, response)
             )
+        )
+    }
+
+    // --- Endpoints de Perfil (STUDENT) ---
+    @GetMapping("me/courses")
+    @Operation(summary = "Get subscribed courses for logged student")
+    fun getMyCourses(request: HttpServletRequest): ResponseEntity<CustomResponse> {
+        return ResponseEntity.ok(
+            CustomResponse(
+                message = "Materias obtenidas con éxito",
+                data = userService.getMyCourses(request)
+            )
+        )
+    }
+
+    @PostMapping("me/courses/{courseId}")
+    @Operation(summary = "Subscribe to a course")
+    fun subscribeToCourse(
+        @PathVariable courseId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        this.validatedUUID(courseId)
+        userService.subscribeToCourse(request, courseId)
+        return ResponseEntity.status(201).body(
+            CustomResponse(message = "Suscripción a materia exitosa", data = null)
+        )
+    }
+
+    @DeleteMapping("me/courses/{courseId}")
+    @Operation(summary = "Unsubscribe from a course")
+    fun unsubscribeFromCourse(
+        @PathVariable courseId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        userService.unsubscribeFromCourse(request, courseId)
+        return ResponseEntity.ok(
+            CustomResponse(message = "Desuscrito con éxito", data = null)
+        )
+    }
+
+    @GetMapping("me/events")
+    @Operation(summary = "Get subscribed events for logged student")
+    fun getMyEvents(request: HttpServletRequest): ResponseEntity<CustomResponse> {
+        return ResponseEntity.ok(
+            CustomResponse(
+                message = "Eventos obtenidos con éxito",
+                data = userService.getMyEvents(request)
+            )
+        )
+    }
+
+    @PostMapping("me/events/{eventId}")
+    @Operation(summary = "Subscribe to an event")
+    fun subscribeToEvent(
+        @PathVariable eventId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        this.validatedUUID(eventId)
+        userService.subscribeToEvent(request, eventId)
+        return ResponseEntity.status(201).body(
+            CustomResponse(message = "Suscripción a evento exitosa", data = null)
+        )
+    }
+
+    @DeleteMapping("me/events/{eventId}")
+    @Operation(summary = "Unsubscribe from an event")
+    fun unsubscribeFromEvent(
+        @PathVariable eventId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        userService.unsubscribeFromEvent(request, eventId)
+        return ResponseEntity.ok(
+            CustomResponse(message = "Desuscrito con éxito", data = null)
+        )
+    }
+
+    // --- Endpoints de Perfil (PROFESSOR) ---
+    @PostMapping("me/reservations")
+    @Operation(summary = "Create a classroom reservation (pending approval) for logged professor")
+    fun createReservation(
+        @RequestBody @Valid dto: CreateReservationDto,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        userService.createReservation(request, dto)
+        return ResponseEntity.status(201).body(
+            CustomResponse(
+                message = "Reserva creada con éxito, pendiente de aprobación",
+                data = null
+            )
+        )
+    }
+
+    @GetMapping("me/reservations")
+    @Operation(summary = "Get reservations for logged professor")
+    fun getMyReservations(
+        request: HttpServletRequest,
+        @RequestParam(required = false) isApproved: Boolean?
+    ): ResponseEntity<CustomResponse> {
+        return ResponseEntity.ok(
+            CustomResponse(
+                message = "Reservas obtenidas con éxito",
+                data = userService.getMyReservations(request, isApproved)
+            )
+        )
+    }
+
+    @DeleteMapping("me/reservations/{scheduleId}")
+    @Operation(summary = "Cancel a reservation")
+    fun cancelReservation(
+        @PathVariable scheduleId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        userService.cancelReservation(request, scheduleId)
+        return ResponseEntity.ok(
+            CustomResponse(message = "Reserva cancelada con éxito", data = null)
         )
     }
 

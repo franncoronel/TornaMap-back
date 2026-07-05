@@ -2,6 +2,7 @@ package ar.edu.unsam.pds
 
 import ar.edu.unsam.pds.models.*
 import ar.edu.unsam.pds.models.enums.RecurrenceWeeks
+import ar.edu.unsam.pds.models.User
 import ar.edu.unsam.pds.security.models.Principal
 import org.junit.jupiter.api.BeforeEach
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -34,8 +35,7 @@ open class BootstrapBasicTest {
                 lastName = "AdamAdam",
                 email = "adam@email.com",
                 image = defaultImage,
-                credits = 100000.0,
-                isAdmin = true
+                role = Role.ADMIN
             )
         )
 
@@ -45,7 +45,7 @@ open class BootstrapBasicTest {
                 lastName = "Eve",
                 email = "eve@email.com",
                 image = defaultImage,
-                credits = 100001.0
+                role = Role.STUDENT
             )
         )
 
@@ -55,7 +55,7 @@ open class BootstrapBasicTest {
                 lastName = "Gomez",
                 email = "boniface@email.com",
                 image = defaultImage,
-                credits = 100002.0
+                role = Role.PROFESSOR
             )
         )
 

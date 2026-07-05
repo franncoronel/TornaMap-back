@@ -4,6 +4,7 @@ import ar.edu.unsam.pds.exceptions.NotFoundException
 import ar.edu.unsam.pds.models.Course
 import ar.edu.unsam.pds.models.Program
 import ar.edu.unsam.pds.repository.CourseRepository
+import ar.edu.unsam.pds.repository.EventRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.*
@@ -11,15 +12,39 @@ import java.util.*
 @Service
 class CourseService(
     private val courseRepository: CourseRepository,
+    private val eventRepository: EventRepository,
 ) {
 
     fun getAll(): List<Course> = courseRepository.findAllByOrderByEventsPresenceAndName()
 
-    fun searchBy(query: String): List<Course> {
-        if (query.isNotBlank()) {
-            return courseRepository.searchByNameOrProgramOrProfessor(query).distinctBy { it.id }
+    fun searchBy(queries: List<String>): List<Course> {
+        val normalizedQueries = queries
+            .map { it.trim() }
+            .filter { it.isNotBlank() }
+            .distinct()
+
+        if (normalizedQueries.isEmpty()) {
+            return getAll()
         }
-        return getAll()
+
+        val queryResults = normalizedQueries.map {
+            courseRepository.searchByNameOrProgramOrProfessorOrEvent(it).distinctBy { course -> course.id }
+        }
+
+        val matchingIds = queryResults
+            .map { it.map { course -> course.id }.toSet() }
+            .reduce(Set<UUID>::intersect)
+
+        return queryResults
+            .first()
+            .filter { it.id in matchingIds }
+            .distinctBy { it.id }
+            .sortedWith(
+                compareBy(
+                    { if (it.events.isNotEmpty()) 0 else 1 },
+                    { it.name.lowercase() }
+                )
+            )
     }
 
     fun findByID(courseID: String?): Course {
@@ -65,5 +90,12 @@ class CourseService(
         }
 
         courseRepository.delete(course)
+    }
+
+    @Transactional
+    fun getByPeriod(periodId: String): List<Course> {
+        return eventRepository.findByPeriodIdWithCourse(UUID.fromString(periodId))
+            .mapNotNull { it.course }
+            .distinctBy { it.id }
     }
 }
