@@ -23,5 +23,11 @@ data class CreateReservationDto(
     val endTime: LocalTime,
 
     @field:NotNull(message = "El tipo de evento es obligatorio")
-    val eventType: EventType // Parcial, Charla, Seminario, etc.
+    val eventType: EventType, // Parcial, Charla, Seminario, etc.
+
+    // Descripción / motivo de la reserva (opcional)
+    val details: String? = null,
+
+    // Solo aplica para Parcial/Final: asignatura asociada (opcional)
+    val courseID: String? = null
 )

@@ -40,13 +40,15 @@ interface EventRepository : JpaRepository<Event, UUID> {
         LEFT JOIN FETCH c.programs p
         LEFT JOIN FETCH cl.building b
         LEFT JOIN FETCH s.assignedUsers u
+        LEFT JOIN e.period per
 
         WHERE cl.code = :classroomCode
+        AND e.isApproved = true
         AND (
             s.date = :moment
             OR (
-                e.period IS NOT NULL
-                AND :moment BETWEEN e.period.startDate AND e.period.endDate
+                per IS NOT NULL
+                AND :moment BETWEEN per.startDate AND per.endDate
                 AND s.weekDay = :weekDay
             )
             OR (
@@ -79,7 +81,7 @@ interface EventRepository : JpaRepository<Event, UUID> {
     // Eventos institucionales (sin curso asociado)
 
     @EntityGraph(attributePaths = ["schedules", "schedules.classroom", "schedules.classroom.building", "schedules.assignedUsers"])
-    @Query("SELECT e FROM Event e WHERE e.course IS NULL AND e.type IN :types")
+    @Query("SELECT e FROM Event e WHERE e.course IS NULL AND e.type IN :types AND e.isApproved = true")
     fun findStandaloneByTypes(@Param("types") types: List<EventType>): List<Event>
 
     // Búsqueda de eventos institucionales por nombre
@@ -89,6 +91,7 @@ interface EventRepository : JpaRepository<Event, UUID> {
         SELECT e FROM Event e
         WHERE e.course IS NULL
           AND e.type IN :types
+          AND e.isApproved = true
           AND LOWER(e.name) LIKE LOWER(CONCAT('%', :query, '%'))
     """)
     fun searchStandaloneByName(

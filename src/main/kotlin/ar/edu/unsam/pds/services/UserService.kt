@@ -15,7 +15,6 @@ import ar.edu.unsam.pds.mappers.UserMapper
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
 import ar.edu.unsam.pds.models.User
-import ar.edu.unsam.pds.models.enums.EventType
 import ar.edu.unsam.pds.repository.ClassroomRepository
 import ar.edu.unsam.pds.repository.CourseRepository
 import ar.edu.unsam.pds.repository.EventRepository
@@ -181,6 +180,11 @@ class UserService(
     fun createReservation(request: HttpServletRequest, dto: CreateReservationDto) {
         val auth = request.userPrincipal as Authentication
         val principalUser = (auth.principal as Principal).getUser()
+        // Traemos el usuario "managed" desde la BD: `principalUser` viene de la sesión (detached)
+        // y es el lado dueño del join app_user_schedule, así que el vínculo no se persistiría.
+        val managedUser = userRepository.findById(principalUser.id).orElseThrow {
+            NotFoundException("Usuario no encontrado")
+        }
 
         // 1. Buscamos el aula
         val classroomIdUUID = UUID.fromString(dto.classroomId)
@@ -196,11 +200,20 @@ class UserService(
         // (Opcional) Acá también podrías llamar al repositorio para validar si el aula
         // ya está ocupada en ese rango horario usando `findEventsByClassroomAndDate`.
 
+        // 2.b Si viene asignatura (Parcial/Final), la buscamos para asociarla
+        val course = dto.courseID?.takeIf { it.isNotBlank() }?.let {
+            courseRepository.findById(UUID.fromString(it)).orElseThrow {
+                NotFoundException("Asignatura no encontrada")
+            }
+        }
+
         // 3. Instanciamos el Evento (usando tu constructor exacto)
         val newEvent = Event(
             name = dto.title,
             isApproved = null, // Pendiente para que el Admin lo apruebe (findByIsApprovedIsNull)
+            course = course, // Solo para Parcial/Final
             type = dto.eventType, // Viene del select del front
+            details = dto.details ?: "",
             customPeriodStart = dto.date, // Al ser reserva puntual, empieza y termina el mismo día
             customPeriodEnd = dto.date
         )
@@ -218,29 +231,47 @@ class UserService(
 
         // 5. Armamos las relaciones bidireccionales usando los métodos de tu dominio
         newEvent.addSchedule(schedule)
-        newEvent.addUserToSchedule(schedule, principalUser) // Esto vincula al profesor a la reserva
+        newEvent.addUserToSchedule(schedule, managedUser) // Esto vincula al profesor a la reserva
 
         // 6. Guardamos el evento (CascadeType.ALL se encarga de guardar el Schedule)
         eventRepository.save(newEvent)
+        // 7. Persistimos el lado dueño de la relación (app_user_schedule)
+        userRepository.save(managedUser)
     }
 
-    fun getMyReservations(request: HttpServletRequest): List<ProfessorReservationDto> {
+    @Transactional
+    fun getMyReservations(request: HttpServletRequest, isApproved: Boolean?): List<ProfessorReservationDto> {
         val auth = request.userPrincipal as Authentication
         val principalUser = (auth.principal as Principal).getUser()
+        // Re-fetch managed: la sesión trae un user detached (con el scheduleList del login).
+        val managedUser = userRepository.findById(principalUser.id).orElseThrow {
+            NotFoundException("Usuario no encontrado")
+        }
 
-        return principalUser.scheduleList.map { ProfileMapper.buildProfessorReservationDto(it) }
+        // O mostramos reservas aprobadas, o mostramos reservas pendientes.
+        return managedUser.scheduleList
+            .filter { schedule ->
+                val approvalState = schedule.event?.isApproved
+                isApproved == null ||
+                        (isApproved && approvalState == true) ||
+                        (!isApproved && approvalState == null)
+            }
+            .map { ProfileMapper.buildProfessorReservationDto(it) }
     }
 
     @Transactional
     fun cancelReservation(request: HttpServletRequest, scheduleId: String) {
         val auth = request.userPrincipal as Authentication
         val principalUser = (auth.principal as Principal).getUser()
+        val managedUser = userRepository.findById(principalUser.id).orElseThrow {
+            NotFoundException("Usuario no encontrado")
+        }
 
-        val scheduleToRemove = principalUser.scheduleList.find { it.id.toString() == scheduleId }
+        val scheduleToRemove = managedUser.scheduleList.find { it.id.toString() == scheduleId }
             ?: throw NotFoundException("Reserva no encontrada")
 
-        principalUser.scheduleList.remove(scheduleToRemove)
-        userRepository.save(principalUser)
+        managedUser.scheduleList.remove(scheduleToRemove)
+        userRepository.save(managedUser)
     }
 
 
