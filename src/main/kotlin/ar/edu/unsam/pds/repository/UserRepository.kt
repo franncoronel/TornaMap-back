@@ -43,5 +43,34 @@ interface UserRepository : JpaRepository<User, UUID> {
         @Param("courseId") courseId: UUID
     ): Long
 
+    @Modifying
+    @Query(
+        value = "DELETE FROM app_user_event WHERE user_id = :userId AND event_id = :eventId",
+        nativeQuery = true
+    )
+    fun removeEventFromUser(
+        @Param("userId") userId: UUID,
+        @Param("eventId") eventId: UUID
+    )
+
+    @Modifying
+    @Query(
+        value = "INSERT INTO app_user_event (user_id, event_id) VALUES (:userId, :eventId)",
+        nativeQuery = true
+    )
+    fun addEventToUser(
+        @Param("userId") userId: UUID,
+        @Param("eventId") eventId: UUID
+    )
+
+    @Query(
+        value = "SELECT COUNT(*) FROM app_user_event WHERE user_id = :userId AND event_id = :eventId",
+        nativeQuery = true
+    )
+    fun countUserEvent(
+        @Param("userId") userId: UUID,
+        @Param("eventId") eventId: UUID
+    ): Long
+
 
 }

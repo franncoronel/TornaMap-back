@@ -2,7 +2,9 @@ package ar.edu.unsam.pds.mappers
 
 import ar.edu.unsam.pds.dto.response.ProfessorReservationDto
 import ar.edu.unsam.pds.dto.response.StudentCourseDto
+import ar.edu.unsam.pds.dto.response.StudentEventDto
 import ar.edu.unsam.pds.models.Course
+import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
 
 object ProfileMapper {
@@ -17,6 +19,30 @@ object ProfileMapper {
             schedules = course.formattedSchedules()
         )
     }
+
+    fun buildStudentEventDto(event: Event): StudentEventDto {
+        return StudentEventDto(
+            id = event.id.toString(),
+            name = event.name,
+            type = event.type.name,
+            course = event.getCourseName(),
+            programs = event.getProgramNames()?.joinToString(" - ") ?: "",
+            modality = eventModality(event),
+            schedules = eventSchedules(event)
+        )
+    }
+
+    private fun eventModality(event: Event): String = when {
+        event.schedules.isEmpty() -> "-"
+        event.schedules.all { it.isVirtual } -> "Virtual"
+        event.schedules.none { it.isVirtual } -> "Presencial"
+        else -> "Virtual - Presencial"
+    }
+
+    private fun eventSchedules(event: Event): String =
+        event.schedules.joinToString(separator = " | ") {
+            "${it.translateAndFormatWeekDay()}: ${it.startTime} - ${it.endTime}"
+        }
 
     fun buildProfessorReservationDto(schedule: Schedule): ProfessorReservationDto {
         val event = schedule.event

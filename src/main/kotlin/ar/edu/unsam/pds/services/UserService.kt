@@ -7,7 +7,7 @@ import ar.edu.unsam.pds.dto.request.UserRequestUpdateDto
 import ar.edu.unsam.pds.dto.response.ProfessorReservationDto
 import ar.edu.unsam.pds.dto.response.StudentCourseDto
 import ar.edu.unsam.pds.dto.response.UserResponseDto
-import ar.edu.unsam.pds.exceptions.InternalServerError
+import ar.edu.unsam.pds.exceptions.BadRequestException
 import ar.edu.unsam.pds.exceptions.NotFoundException
 import ar.edu.unsam.pds.exceptions.ValidationException
 import ar.edu.unsam.pds.mappers.ProfileMapper
@@ -68,7 +68,7 @@ class UserService(
     @Transactional
     fun register(form: RegisterFormDto): UUID {
         if (principalRepository.findUserByEmail(form.email).isPresent) {
-            throw InternalServerError("El correo ya está en uso. Si elimino su cuenta y quiere recuperarla dirijase a @pirulo")
+            throw InternalServerError("El correo no está disponible.")
         }
         val encryptedPassword = encryptPassword(form.password)
 
@@ -158,7 +158,7 @@ class UserService(
         val courseIdUUID = UUID.fromString(courseId)
 
         if (userRepository.countUserCourse(principalUser.id, courseIdUUID) > 0) {
-            throw InternalServerError("Ya estás suscripto a esta materia")
+            throw BadRequestException("Ya estás suscripto a esta materia")
         }
 
         userRepository.addCourseToUser(principalUser.id, courseIdUUID)

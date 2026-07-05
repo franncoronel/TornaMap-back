@@ -46,6 +46,14 @@ class User(
     )
     val courses: MutableSet<Course> = mutableSetOf()
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "app_user_event",
+        joinColumns = [JoinColumn(name = "user_id")],
+        inverseJoinColumns = [JoinColumn(name = "event_id")]
+    )
+    val events: MutableSet<Event> = mutableSetOf()
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
