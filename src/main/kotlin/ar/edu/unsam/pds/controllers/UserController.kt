@@ -160,6 +160,42 @@ class UserController : UUIDValid() {
         )
     }
 
+    @GetMapping("me/events")
+    @Operation(summary = "Get subscribed events for logged student")
+    fun getMyEvents(request: HttpServletRequest): ResponseEntity<CustomResponse> {
+        return ResponseEntity.ok(
+            CustomResponse(
+                message = "Eventos obtenidos con éxito",
+                data = userService.getMyEvents(request)
+            )
+        )
+    }
+
+    @PostMapping("me/events/{eventId}")
+    @Operation(summary = "Subscribe to an event")
+    fun subscribeToEvent(
+        @PathVariable eventId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        this.validatedUUID(eventId)
+        userService.subscribeToEvent(request, eventId)
+        return ResponseEntity.status(201).body(
+            CustomResponse(message = "Suscripción a evento exitosa", data = null)
+        )
+    }
+
+    @DeleteMapping("me/events/{eventId}")
+    @Operation(summary = "Unsubscribe from an event")
+    fun unsubscribeFromEvent(
+        @PathVariable eventId: String,
+        request: HttpServletRequest
+    ): ResponseEntity<CustomResponse> {
+        userService.unsubscribeFromEvent(request, eventId)
+        return ResponseEntity.ok(
+            CustomResponse(message = "Desuscrito con éxito", data = null)
+        )
+    }
+
     // --- Endpoints de Perfil (PROFESSOR) ---
     @PostMapping("me/reservations")
     @Operation(summary = "Create a classroom reservation (pending approval) for logged professor")
