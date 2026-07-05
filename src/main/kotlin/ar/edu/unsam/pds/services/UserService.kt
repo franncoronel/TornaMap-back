@@ -6,8 +6,10 @@ import ar.edu.unsam.pds.dto.request.RegisterFormDto
 import ar.edu.unsam.pds.dto.request.UserRequestUpdateDto
 import ar.edu.unsam.pds.dto.response.ProfessorReservationDto
 import ar.edu.unsam.pds.dto.response.StudentCourseDto
+import ar.edu.unsam.pds.dto.response.StudentEventDto
 import ar.edu.unsam.pds.dto.response.UserResponseDto
 import ar.edu.unsam.pds.exceptions.BadRequestException
+import ar.edu.unsam.pds.exceptions.InternalServerError
 import ar.edu.unsam.pds.exceptions.NotFoundException
 import ar.edu.unsam.pds.exceptions.ValidationException
 import ar.edu.unsam.pds.mappers.ProfileMapper
@@ -15,6 +17,7 @@ import ar.edu.unsam.pds.mappers.UserMapper
 import ar.edu.unsam.pds.models.Event
 import ar.edu.unsam.pds.models.Schedule
 import ar.edu.unsam.pds.models.User
+import ar.edu.unsam.pds.models.enums.EventType
 import ar.edu.unsam.pds.repository.ClassroomRepository
 import ar.edu.unsam.pds.repository.CourseRepository
 import ar.edu.unsam.pds.repository.EventRepository
@@ -175,6 +178,50 @@ class UserService(
         userRepository.removeCourseFromUser(principalUser.id, courseIdUUID)
     }
 
+    //--- Eventos suscriptos por el STUDENT (charlas, seminarios, parciales, etc.; no cursadas) ---
+    @Transactional
+    fun getMyEvents(request: HttpServletRequest): List<StudentEventDto> {
+        val auth = request.userPrincipal as Authentication
+        val principalUser = (auth.principal as Principal).getUser()
+        val managedUser = userRepository.findById(principalUser.id).orElseThrow {
+            NotFoundException("Usuario no encontrado")
+        }
+        return managedUser.events.map { ProfileMapper.buildStudentEventDto(it) }
+    }
+
+    @Transactional
+    fun subscribeToEvent(request: HttpServletRequest, eventId: String) {
+        val auth = request.userPrincipal as Authentication
+        val principalUser = (auth.principal as Principal).getUser()
+
+        val eventIdUUID = UUID.fromString(eventId)
+        val event = eventRepository.findById(eventIdUUID).orElseThrow {
+            NotFoundException("Evento no encontrado")
+        }
+
+        if (event.type == EventType.CURSADA) {
+            throw ValidationException("No podés suscribirte a una cursada; suscribite a la materia correspondiente.")
+        }
+        if (event.isApproved != true) {
+            throw ValidationException("Sólo podés suscribirte a eventos aprobados.")
+        }
+        if (userRepository.countUserEvent(principalUser.id, eventIdUUID) > 0) {
+            throw InternalServerError("Ya estás suscripto a este evento")
+        }
+
+        userRepository.addEventToUser(principalUser.id, eventIdUUID)
+    }
+
+    @Transactional
+    fun unsubscribeFromEvent(request: HttpServletRequest, eventId: String) {
+        val auth = request.userPrincipal as Authentication
+        val principalUser = (auth.principal as Principal).getUser()
+
+        val eventIdUUID = UUID.fromString(eventId)
+
+        userRepository.removeEventFromUser(principalUser.id, eventIdUUID)
+    }
+
     //--- Para Profile de PROFESSOR---
     @Transactional
     fun createReservation(request: HttpServletRequest, dto: CreateReservationDto) {
@@ -251,7 +298,7 @@ class UserService(
         // O mostramos reservas aprobadas, o mostramos reservas pendientes.
         return managedUser.scheduleList
             .filter { schedule ->
-                val approvalState = schedule.event?.isApproved
+                val approvalState = schedule.event.isApproved
                 isApproved == null ||
                         (isApproved && approvalState == true) ||
                         (!isApproved && approvalState == null)
