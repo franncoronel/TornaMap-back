@@ -240,7 +240,7 @@ class UserService(
     }
 
     @Transactional
-    fun getMyReservations(request: HttpServletRequest): List<ProfessorReservationDto> {
+    fun getMyReservations(request: HttpServletRequest, isApproved: Boolean?): List<ProfessorReservationDto> {
         val auth = request.userPrincipal as Authentication
         val principalUser = (auth.principal as Principal).getUser()
         // Re-fetch managed: la sesión trae un user detached (con el scheduleList del login).
@@ -248,10 +248,14 @@ class UserService(
             NotFoundException("Usuario no encontrado")
         }
 
-        // Solo mostramos reservas ya aprobadas por el admin.
-        // (isApproved == null → pendiente, false → rechazada, true → aprobada)
+        // O mostramos reservas aprobadas, o mostramos reservas pendientes.
         return managedUser.scheduleList
-            .filter { it.event.isApproved == true }
+            .filter { schedule ->
+                val approvalState = schedule.event?.isApproved
+                isApproved == null ||
+                        (isApproved && approvalState == true) ||
+                        (!isApproved && approvalState == null)
+            }
             .map { ProfileMapper.buildProfessorReservationDto(it) }
     }
 

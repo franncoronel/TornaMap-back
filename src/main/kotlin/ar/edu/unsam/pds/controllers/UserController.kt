@@ -178,11 +178,14 @@ class UserController : UUIDValid() {
 
     @GetMapping("me/reservations")
     @Operation(summary = "Get reservations for logged professor")
-    fun getMyReservations(request: HttpServletRequest): ResponseEntity<CustomResponse> {
+    fun getMyReservations(
+        request: HttpServletRequest,
+        @RequestParam(required = false) isApproved: Boolean?
+    ): ResponseEntity<CustomResponse> {
         return ResponseEntity.ok(
             CustomResponse(
                 message = "Reservas obtenidas con éxito",
-                data = userService.getMyReservations(request)
+                data = userService.getMyReservations(request, isApproved)
             )
         )
     }
